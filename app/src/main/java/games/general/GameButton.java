@@ -8,7 +8,7 @@ public class GameButton {
     // Button that opens this game
     private Button button;
     // Game class which has the activity and start method
-    private Game game;
+    private final Game game;
 
     public GameButton(Button b, Game g) {
         this.button = b;
@@ -18,7 +18,7 @@ public class GameButton {
             // Get the context of the button i.e. the Activity the button was in
             Context context = view.getContext();
             // Create an intent for switching to the game activity
-            Intent intent = new Intent(context, g.getActiviy());
+            Intent intent = new Intent(context, g.getActivity());
             // Start the activity
             context.startActivity(intent);
         });

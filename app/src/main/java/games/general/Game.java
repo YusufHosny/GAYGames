@@ -7,7 +7,7 @@ public abstract class Game {
     protected Class<? extends AppCompatActivity> act;
     public abstract void start();
 
-    public Class<? extends AppCompatActivity> getActiviy() {
+    public Class<? extends AppCompatActivity> getActivity() {
         return act;
     }
 
