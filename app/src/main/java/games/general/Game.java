@@ -1,10 +1,13 @@
 package games.general;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public abstract class Game {
-    protected Class act;
+    // Activity associated with the game
+    protected Class<? extends AppCompatActivity> act;
     public abstract void start();
 
-    public Class getActiviy() {
+    public Class<? extends AppCompatActivity> getActiviy() {
         return act;
     }
 

@@ -10,6 +10,7 @@ public class PlaceholderGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialize the activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placeholder_game);
     }
