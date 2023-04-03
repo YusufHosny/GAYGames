@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.gaygames.R;
 
@@ -33,20 +32,24 @@ public class TicTacToeActivity extends AppCompatActivity {
         board = new ArrayList<>();
 
         // define board and tiles using the buttons in the button container
-        ConstraintLayout TTLBC = findViewById(R.id.TTLBContainer);
-        for (int i = 0; i < TTLBC.getChildCount(); i++) {
-            View childView = TTLBC.getChildAt(i);
-            if (childView instanceof Button) {
-                Button button = (Button) childView;
-                board.add(new TicTacToeTile(button));
-            }
-        }
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb1)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb2)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb3)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb4)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb5)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb6)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb7)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb8)));
+        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb9)));
+
+
+
 
     }
 
 
     public boolean checkWin() {
-        return checkVerticals() || checkHorizontals();// || checkDiagonals();
+        return checkVerticals() || checkHorizontals() || checkDiagonals();
     }
 
 
@@ -65,7 +68,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         for(int i = 0; i < 3; i++) {
             int j = i*3;
             if(board.get(j).getChoice() == board.get(j+1).getChoice()
-                    && board.get(j+2).getChoice() == board.get(j+6).getChoice()
+                    && board.get(j+1).getChoice() == board.get(j+2).getChoice()
                     && board.get(j).getChoice() != TicTacToeChoices.BLANK) {
                 return true;
             }
@@ -75,19 +78,15 @@ public class TicTacToeActivity extends AppCompatActivity {
 
     public boolean checkDiagonals() {
         // if the middle tile is empty then no diagonal match
-        if(board.get(4).getChoice() != TicTacToeChoices.BLANK) {
+        if(board.get(4).getChoice() == TicTacToeChoices.BLANK) {
             return false;
         }
 
         if(board.get(0).getChoice() == board.get(4).getChoice()
                 && board.get(4).getChoice() == board.get(8).getChoice()) {
             return true;
-        } else if(board.get(2).getChoice() == board.get(4).getChoice()
-                && board.get(4).getChoice() == board.get(6).getChoice()) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return board.get(2).getChoice() == board.get(4).getChoice()
+                && board.get(4).getChoice() == board.get(6).getChoice();
     }
 
     // method for tictactoe button onclick
@@ -106,7 +105,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         // if the game is done
         if(checkWin()) {
             TextView btmTxt = findViewById(R.id.TTTbtmTxt);
-            btmTxt.setText("GAME DONE " + getChoiceString(choice) + " WON");
+            btmTxt.setText(getString(R.string.btmTxtWon, getChoiceString(choice)));
 
             for(TicTacToeTile t: board) {
                 t.getButton().setClickable(false);
