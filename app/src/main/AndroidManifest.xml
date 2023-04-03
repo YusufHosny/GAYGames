@@ -12,6 +12,9 @@
         android:theme="@style/Theme.GAYGames"
         tools:targetApi="31">
         <activity
+            android:name=".ui.gamesui.tictactoe.TicTacToeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.gamesui.placeholder.PlaceholderGameActivity"
             android:exported="false" />
         <activity
