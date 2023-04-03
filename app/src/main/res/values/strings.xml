@@ -14,4 +14,6 @@
     <string name="tictactoeToptxt"> Tic Tac Toe </string>
     <string name="tictactoeBtmTxt"> BOTTOM TEXT </string>
 
+    <string name="btmTxtWon">GAME DONE! %1$s won.</string>
+
 </resources>
