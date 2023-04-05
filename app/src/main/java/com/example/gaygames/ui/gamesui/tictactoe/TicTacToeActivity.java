@@ -48,11 +48,13 @@ public class TicTacToeActivity extends AppCompatActivity {
     }
 
 
+    // return all win con checks
     public boolean checkWin() {
         return checkVerticals() || checkHorizontals() || checkDiagonals();
     }
 
 
+    // check vertical win con
     public boolean checkVerticals() {
         for(int i = 0; i < 3; i++) {
             if(board.get(i).getChoice() == board.get(i+3).getChoice()
@@ -64,6 +66,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         return false;
     }
 
+    // check horizontal win con
     public boolean checkHorizontals() {
         for(int i = 0; i < 3; i++) {
             int j = i*3;
@@ -76,6 +79,7 @@ public class TicTacToeActivity extends AppCompatActivity {
         return false;
     }
 
+    // check diagonal win con
     public boolean checkDiagonals() {
         // if the middle tile is empty then no diagonal match
         if(board.get(4).getChoice() == TicTacToeChoices.BLANK) {
@@ -104,9 +108,11 @@ public class TicTacToeActivity extends AppCompatActivity {
 
         // if the game is done
         if(checkWin()) {
+            //  update bottom text
             TextView btmTxt = findViewById(R.id.TTTbtmTxt);
             btmTxt.setText(getString(R.string.btmTxtWon, getChoiceString(choice)));
 
+            // set all buttons to unclickable
             for(TicTacToeTile t: board) {
                 t.getButton().setClickable(false);
             }
