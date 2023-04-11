@@ -16,4 +16,7 @@
 
     <string name="btmTxtWon">GAME DONE! %1$s won.</string>
 
+    <!-- Infinite Runner -->
+    <string name="runnerIconDescription"> Runner Icon </string>
+
 </resources>

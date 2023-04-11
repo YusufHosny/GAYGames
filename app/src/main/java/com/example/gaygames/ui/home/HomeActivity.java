@@ -10,6 +10,7 @@ import com.example.gaygames.R;
 import games.TicTacToe.TicTacToeGame;
 import games.general.GameButton;
 import games.placeholder.PlaceholderGame;
+import games.runner.RunnerGame;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -23,6 +24,8 @@ public class HomeActivity extends AppCompatActivity {
         GameButton firstGameButton = new GameButton((Button) findViewById(R.id.button1), new PlaceholderGame());
 
         GameButton tttGameButton = new GameButton((Button) findViewById(R.id.button2), new TicTacToeGame());
+
+        GameButton runnerGameButton = new GameButton((Button) findViewById(R.id.button3), new RunnerGame());
     }
 
 
