@@ -38,4 +38,13 @@ public class Obstacles {
         }
     }
 
+
+    public boolean checkCollisions(Runner runner) {
+        boolean isColliding = false;
+        for(Obstacle obstacle: obstacles) {
+            if(obstacle.checkCollision(runner)) isColliding = true;
+        }
+        return isColliding;
+    }
+
 }

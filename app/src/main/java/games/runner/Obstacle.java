@@ -4,11 +4,10 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
 import com.example.gaygames.R;
+import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
 
 
 public class Obstacle {
@@ -17,13 +16,20 @@ public class Obstacle {
 
     private float position;
 
+    private final RunnerActivity activity;
 
-    public Obstacle(AppCompatActivity act) {
+    private float runnerPos;
+
+    // boolean: True if obstacle still hasnt passed the player, false otherwise
+    private boolean isBefore;
+
+    public Obstacle(RunnerActivity act) {
         // create the image
         img = new ImageView(act);
         img.setImageResource(android.R.drawable.editbox_dropdown_light_frame);
         // set image size
         img.setLayoutParams(new ViewGroup.LayoutParams(100,300));
+        img.setScaleType(ImageView.ScaleType.FIT_XY);
         // add image to activity
         ((ConstraintLayout) act.findViewById(R.id.RunnerBg)).addView(img);
 
@@ -39,6 +45,14 @@ public class Obstacle {
         img.setX(position);
         img.setY(screenHeight * 0.5f);
 
+        activity = act;
+
+        runnerPos = 0;
+
+        // by default obstacle still hasnt passed runner
+        isBefore = true;
+
+
 
     }
 
@@ -46,6 +60,23 @@ public class Obstacle {
         // update position
         position -= speed * RunnerActivity.deltaT * 0.001;
         img.setX(position);
+
+    }
+
+    public boolean checkCollision(Runner runner) {
+        // if first check
+        if(runnerPos == 0) {
+            runnerPos = runner.getPosition();
+            return false;
+
+        } else if (!isBefore) { // if obstacle passed the runner then no collision
+            return false;
+        } else if (position < runnerPos) { // check if position is after runner position
+            isBefore = false;
+            return true;
+        }
+
+        return false;
 
     }
 

@@ -1,9 +1,9 @@
 package com.example.gaygames.ui.gamesui.runner;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,6 +60,7 @@ public class RunnerActivity extends AppCompatActivity {
                 }
             }, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
 
+        // make the runner jump when screen is clicked
         findViewById(R.id.RunnerBg).setOnClickListener(v -> runner.jump());
 
     }
@@ -67,7 +68,7 @@ public class RunnerActivity extends AppCompatActivity {
     // initialize the game
     public void initialize() {
         // set default values
-        runner = new Runner((ImageView) findViewById(R.id.runnerImg));
+        runner = new Runner(findViewById(R.id.runnerImg));
         gameDone = false;
         scrollSpeed = 10;
         findViewById(R.id.RunnerBg).setClickable(true);
@@ -76,25 +77,25 @@ public class RunnerActivity extends AppCompatActivity {
         obstacles = new Obstacles(this);
         obstacles.addObstacle();
 
-        // create frame scheduler
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        f = executor.scheduleAtFixedRate(() -> {
-            nextFrame();
-            if(gameDone) {
-                f.cancel(true);
-            }
-        }, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
-
     }
 
     public void nextFrame() {
         scrollSpeed += speedIncrease;
         runner.next();
         obstacles.next();
+        // if theres a collision end the game
+        if(obstacles.checkCollisions(runner)) {
+            setGameDone(true);
+            Log.d("ydebug", "gameDone");
+        }
 
     }
 
     public int getScrollSpeed() {
         return scrollSpeed;
+    }
+
+    public void setGameDone(boolean g) {
+        gameDone = g;
     }
 }

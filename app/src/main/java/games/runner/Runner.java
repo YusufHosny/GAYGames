@@ -1,5 +1,6 @@
 package games.runner;
 
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
@@ -18,8 +19,13 @@ public class Runner {
     public Runner(ImageView i) {
         img = i;
 
+        // set image size
+        img.setLayoutParams(new ViewGroup.LayoutParams(200,200));
+
+
         // set ground and initial pos
         position = img.getY();
+
         ground = position;
 
 
@@ -56,4 +62,7 @@ public class Runner {
     public void duck() {}
 
 
+    public float getPosition() {
+        return position;
+    }
 }
