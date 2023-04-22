@@ -1,9 +1,9 @@
 package com.example.gaygames.ui.gamesui.runner;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,16 +14,19 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import games.runner.Obstacles;
+import games.runner.Obstacle;
+import games.runner.ObstacleFactory;
 import games.runner.Runner;
 
 public class RunnerActivity extends AppCompatActivity {
-    // speeds are all given as pixels/second
-    public static final int gravity = 20;
+    // gravity in pixels/second
+    public static final int gravity = 150;
+
+    // speed increase per frame
     public static final int speedIncrease = 2;
 
     // time between each frame in milliseconds
-    public static final int deltaT = 60;
+    public static final int deltaT = 40;
     private int scrollSpeed;
 
 
@@ -33,12 +36,22 @@ public class RunnerActivity extends AppCompatActivity {
 
     // Executor future for the frames, to be canceled when game is done
     ScheduledFuture<?> f;
-    Obstacles obstacles;
+    ObstacleFactory obstacleFactory;
+
+    private Obstacle obs;
+
+    private int score;
+
+    private TextView scoreView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_runner);
+
+
+        // set scoreView to correct id
+        scoreView = findViewById(R.id.scoreView);
 
         // wait for the layout to finish inflating to initialize
         View rootView = findViewById(android.R.id.content);
@@ -70,32 +83,45 @@ public class RunnerActivity extends AppCompatActivity {
         // set default values
         runner = new Runner(findViewById(R.id.runnerImg));
         gameDone = false;
-        scrollSpeed = 10;
+        scrollSpeed = 30;
+        resetScore();
         findViewById(R.id.RunnerBg).setClickable(true);
 
         // create obstacles
-        obstacles = new Obstacles(this);
-        obstacles.addObstacle();
+        obstacleFactory = new ObstacleFactory(this);
+        obs = obstacleFactory.createObstactle();
+
 
     }
 
     public void nextFrame() {
         scrollSpeed += speedIncrease;
         runner.next();
-        obstacles.next();
+        obs.next(scrollSpeed);
         // if theres a collision end the game
-        if(obstacles.checkCollisions(runner)) {
+        if(obs.checkCollision(runner)) {
             setGameDone(true);
-            Log.d("ydebug", "gameDone");
         }
 
     }
 
-    public int getScrollSpeed() {
-        return scrollSpeed;
-    }
 
     public void setGameDone(boolean g) {
         gameDone = g;
+    }
+
+
+    public void resetScore() {
+        score = 0;
+        refreshScoreView();
+    }
+
+    public void incrementScore() {
+        score += 1;
+        refreshScoreView();
+    }
+
+    public void refreshScoreView() {
+        runOnUiThread(() -> scoreView.setText(String.valueOf(score)));
     }
 }

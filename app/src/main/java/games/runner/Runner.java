@@ -21,6 +21,7 @@ public class Runner {
 
         // set image size
         img.setLayoutParams(new ViewGroup.LayoutParams(200,200));
+        img.setTranslationX(80f);
 
 
         // set ground and initial pos
@@ -31,9 +32,7 @@ public class Runner {
 
     }
 
-    public void move(int offset) {
 
-    }
 
     // next frame updates for runner object
     public void next() {
@@ -55,7 +54,7 @@ public class Runner {
 
     public void jump() {
         if(position == ground) {
-            vertSpeed = 500;
+            vertSpeed = 1500;
         }
     }
 
@@ -63,6 +62,7 @@ public class Runner {
 
 
     public float getPosition() {
-        return position;
+        return img.getY();
     }
+    public float getX() { return img.getX(); }
 }

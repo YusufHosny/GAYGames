@@ -18,6 +18,7 @@ public class Obstacle {
 
     private final RunnerActivity activity;
 
+    private final float initPos;
     private float runnerPos;
 
     // boolean: True if obstacle still hasnt passed the player, false otherwise
@@ -28,7 +29,7 @@ public class Obstacle {
         img = new ImageView(act);
         img.setImageResource(android.R.drawable.editbox_dropdown_light_frame);
         // set image size
-        img.setLayoutParams(new ViewGroup.LayoutParams(100,300));
+        img.setLayoutParams(new ViewGroup.LayoutParams(100,240));
         img.setScaleType(ImageView.ScaleType.FIT_XY);
         // add image to activity
         ((ConstraintLayout) act.findViewById(R.id.RunnerBg)).addView(img);
@@ -40,7 +41,9 @@ public class Obstacle {
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
 
-        position = screenWidth - 10;
+        initPos = screenWidth - 10;
+
+        position = initPos;
 
         img.setX(position);
         img.setY(screenHeight * 0.5f);
@@ -51,9 +54,6 @@ public class Obstacle {
 
         // by default obstacle still hasnt passed runner
         isBefore = true;
-
-
-
     }
 
     public void next(float speed) {
@@ -61,19 +61,32 @@ public class Obstacle {
         position -= speed * RunnerActivity.deltaT * 0.001;
         img.setX(position);
 
+        if(getPosition() < -100f) { // if out of screen move to start of screen
+           setPosition(initPos);
+           isBefore = true;
+        }
+
     }
 
     public boolean checkCollision(Runner runner) {
+        // start and end positions of the runner img
+        float rPosStart, rPosEnd;
+        rPosEnd = runnerPos + 50f;
+        rPosStart = rPosEnd + 100f;
+
+
         // if first check
         if(runnerPos == 0) {
-            runnerPos = runner.getPosition();
+            runnerPos = runner.getX();
             return false;
 
         } else if (!isBefore) { // if obstacle passed the runner then no collision
             return false;
-        } else if (position < runnerPos) { // check if position is after runner position
+        } else if (position < rPosEnd) { // check if position is after runner position
             isBefore = false;
-            return true;
+            activity.incrementScore();
+        } else if (position < rPosStart) { // check if position is between rpos start and end
+            return runner.getPosition() > 375f; // check if height is higher than obstacle
         }
 
         return false;
@@ -82,5 +95,10 @@ public class Obstacle {
 
     public float getPosition() {
         return position;
+    }
+
+    public void setPosition(float p) {
+        position = p;
+        img.setX(position);
     }
 }

@@ -13,6 +13,5 @@ public class ObstacleFactory {
 
     public Obstacle createObstactle() {
         return new Obstacle(activity);
-
     }
 }
