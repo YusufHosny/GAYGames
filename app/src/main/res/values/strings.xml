@@ -9,6 +9,13 @@
     <string name="placeholder_game3">Gay 3</string>
     <string name="placeholder_game4">Gay 4</string>
 
+    <!-- Login Activity -->
+    <string name="LoginButton">Login</string>
+    <string name="CreateAccountButton">Create Account</string>
+    <string name="NameText">Name</string>
+    <string name="PasswordText">Password</string>
+
+
 
     <!-- TicTacToe -->
     <string name="tictactoeBlank"> </string>
@@ -30,8 +37,6 @@
     <string name="scissorsButton2"> scissorsButton </string>
     <string name="textView1"> Player 1, your turn  </string>
     <string name="textView2"> Player 2 </string>
-
-
 
 
 </resources>
