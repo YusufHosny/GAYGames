@@ -12,6 +12,9 @@
         android:theme="@style/Theme.GAYGames"
         tools:targetApi="31">
         <activity
+            android:name=".ui.gamesui.RockPaperScissors.RPSActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.gamesui.runner.RunnerActivity"
             android:exported="false" />
         <activity
