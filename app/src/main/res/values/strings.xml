@@ -7,6 +7,7 @@
     <string name="placeholder_game1">Gay</string>
     <string name="placeholder_game2">Gay 2</string>
     <string name="placeholder_game3">Gay 3</string>
+    <string name="placeholder_game4">Gay 4</string>
 
 
     <!-- TicTacToe -->
@@ -19,5 +20,18 @@
     <!-- Infinite Runner -->
     <string name="runnerIconDescription"> Runner Icon </string>
     <string name="initialScore">0</string>
+
+    <!-- RockPaperScissors-->
+    <string name="rockButton1"> rockButton </string>
+    <string name="paperButton1"> paperButton </string>
+    <string name="scissorsButton1"> scissorsButton </string>
+    <string name="rockButton2"> rockButton </string>
+    <string name="paperButton2"> paperButton </string>
+    <string name="scissorsButton2"> scissorsButton </string>
+    <string name="textView1"> Player 1, your turn  </string>
+    <string name="textView2"> Player 2 </string>
+
+
+
 
 </resources>

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gaygames.R;
 
+import games.RockPaperScissors.RPSGame;
 import games.TicTacToe.TicTacToeGame;
 import games.general.GameButton;
 import games.placeholder.PlaceholderGame;
@@ -26,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
         GameButton tttGameButton = new GameButton((Button) findViewById(R.id.button2), new TicTacToeGame());
 
         GameButton runnerGameButton = new GameButton((Button) findViewById(R.id.button3), new RunnerGame());
+
+        GameButton RPSGameButton = new GameButton((Button) findViewById(R.id.button4), new RPSGame());
     }
 
 

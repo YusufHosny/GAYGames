@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="buttonEnum" format="enum">
+        <enum name="Rock" value="Rock"/>
+        <enum name="Paper" value="Paper"/>
+        <enum name="Scissors" value="Scissors"/>
+    </attr>
+</resources>
+
+
