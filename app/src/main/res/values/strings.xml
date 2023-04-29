@@ -37,6 +37,7 @@
     <string name="scissorsButton2"> scissorsButton </string>
     <string name="textView1"> Player 1, your turn  </string>
     <string name="textView2"> Player 2 </string>
+    <string name="loginImageLabel">loginImage</string>
 
 
 </resources>

@@ -4,36 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CD0A9F"
-    tools:context=".ui.login.LoginMenu">
+    android:background="#3B6755"
+    tools:context=".ui.login.LoginMenuActivity">
 
     <Button
         android:id="@+id/CCButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:layout_marginBottom="56dp"
         android:onClick="CreateAccount"
         android:text="@string/CreateAccountButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LButton" />
 
     <Button
         android:id="@+id/LButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="560dp"
+        android:layout_marginTop="120dp"
         android:onClick="login"
         android:text="@string/LoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/PsdText" />
 
     <EditText
         android:id="@+id/UsernameText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="376dp"
+        android:autofillHints="Username"
         android:ems="10"
         android:hint="@string/NameText"
         android:inputType="textPersonName"
@@ -47,8 +50,9 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginTop="460dp"
+        android:autofillHints="Password"
         android:ems="10"
-        android:hint="@string/NameText"
+        android:hint="@string/PasswordText"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -60,11 +64,12 @@
         android:layout_width="205dp"
         android:layout_height="200dp"
         android:layout_marginTop="112dp"
+        android:contentDescription="@string/loginImageLabel"
         android:scaleType="centerInside"
+        android:src="@drawable/nour"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/nour" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
