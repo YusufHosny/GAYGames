@@ -55,6 +55,9 @@ public class UserData {
     }
 
     public static void parseFriendString(String friendString) {
+        // if friendstring is empty, do nothing
+        if(friendString.equals(" ")) return;
+
         // new empty stringBuilder to get friends from
         StringBuilder collectorString = new StringBuilder();
         friendString = friendString.substring(2);
