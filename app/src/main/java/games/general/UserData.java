@@ -43,7 +43,7 @@ public class UserData {
                     try {
                         JSONArray responseArray = new JSONArray(response);
                         JSONObject object = responseArray.getJSONObject(0);
-                        String friendString = object.getString("friendString"); // TODO MAKE SURE QUERY IS THE SAME
+                        String friendString = object.getString("friendList");
                         parseFriendString(friendString);
                     } catch( JSONException e ) {
                         Log.e( "LeaderboardDB", e.getMessage(), e );
