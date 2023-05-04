@@ -14,32 +14,34 @@
         android:theme="@style/Theme.GAYGames"
         tools:targetApi="31">
         <activity
+            android:name=".ui.gamesui.tictactoe.TicTacToeMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.login.LoginMenuActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.gamesui.RockPaperScissors.RPSActivity"
             android:exported="false" />
         <activity
             android:name=".ui.gamesui.runner.RunnerActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:exported="false"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden" />
+            android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.gamesui.tictactoe.TicTacToeActivity"
+            android:name=".ui.gamesui.tictactoe.TicTacToe1PActivity"
             android:exported="false" />
         <activity
             android:name=".ui.gamesui.placeholder.PlaceholderGameActivity"
             android:exported="false" />
         <activity
             android:name=".ui.home.HomeActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

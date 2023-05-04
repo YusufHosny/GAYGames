@@ -10,8 +10,4 @@ public class RunnerGame extends Game {
         act = RunnerActivity.class;
     }
 
-    @Override
-    public void start() {
-
-    }
 }

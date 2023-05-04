@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.gamesui.tictactoe.TicTacToeMenuActivity">
+
+    <Button
+        android:id="@+id/ttt1pbutton"
+        android:layout_width="86dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="300dp"
+        android:text="@string/tttplaybutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <Button
+        android:id="@+id/tttmpbutton"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="300dp"
+        android:text="@string/tttplaybutton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/ttt1pTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/ttt1pTxt"
+        app:layout_constraintBottom_toTopOf="@+id/ttt1pbutton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/ttmptxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/tttmpTxt"
+        app:layout_constraintBottom_toTopOf="@+id/tttmpbutton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tttmpMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/tictactoeMenuTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

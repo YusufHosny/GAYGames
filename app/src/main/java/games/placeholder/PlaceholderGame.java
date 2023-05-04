@@ -11,8 +11,4 @@ public class PlaceholderGame extends Game {
         act = PlaceholderGameActivity.class;
     }
 
-    @Override
-    public void start() {
-
-    }
 }

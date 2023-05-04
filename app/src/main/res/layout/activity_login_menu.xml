@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="57dp"
         android:onClick="CreateAccount"
         android:text="@string/CreateAccountButton"
         app:layout_constraintBottom_toBottomOf="parent"

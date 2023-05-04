@@ -16,13 +16,19 @@
     <string name="PasswordText">Password</string>
 
 
-
     <!-- TicTacToe -->
     <string name="tictactoeBlank"> </string>
     <string name="tictactoeToptxt"> Tic Tac Toe </string>
     <string name="tictactoeBtmTxt"> BOTTOM TEXT </string>
 
     <string name="btmTxtWon">GAME DONE! %1$s won.</string>
+
+    <string name="tictactoeMenuTxt">TicTacToe Menu</string>
+    <string name="tttplaybutton">Play</string>
+    <string name="ttt1pTxt">Singleplayer</string>
+    <string name="tttmpTxt">Multiplayer</string>
+
+
 
     <!-- Infinite Runner -->
     <string name="runnerIconDescription"> Runner Icon </string>

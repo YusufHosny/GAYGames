@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import games.TicTacToe.TicTacToeChoices;
 import games.TicTacToe.TicTacToeTile;
 
-public class TicTacToeActivity extends AppCompatActivity {
+public class TicTacToe1PActivity extends AppCompatActivity {
 
     // current turn the game is on (turn counter)
     private int turn;
