@@ -1,13 +1,13 @@
 package games.TicTacToe;
 
-import com.example.gaygames.ui.gamesui.tictactoe.TicTacToe1PActivity;
+import com.example.gaygames.ui.gamesui.tictactoe.TicTacToeMenuActivity;
 
 import games.general.Game;
 
 public class TicTacToeGame extends Game {
 
     public TicTacToeGame() {
-        act = TicTacToe1PActivity.class;
+        act = TicTacToeMenuActivity.class;
     }
 
 }
