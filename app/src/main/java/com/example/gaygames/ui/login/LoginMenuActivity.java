@@ -1,4 +1,4 @@
-package com.example.gaygames.ui.gamesui.tictactoe.login;
+package com.example.gaygames.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
