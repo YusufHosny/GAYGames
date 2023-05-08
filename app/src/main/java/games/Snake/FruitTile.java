@@ -1,6 +1,6 @@
 package games.Snake;
 
-public class FruitTile extends Tile{
+public class FruitTile extends games.Snake.Tile {
     public FruitTile(int row, int col) {
         super(row, col);
     }

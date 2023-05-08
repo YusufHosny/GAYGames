@@ -1,6 +1,5 @@
 package games.Snake;
 
-import java.util.LinkedList;
 import java.util.Random;
 
 public class SnakeGrid {
@@ -29,7 +28,7 @@ public class SnakeGrid {
         int x= R.nextInt(snakeGrid.length);
         int y= R.nextInt(snakeGrid[0].length);
 
-        if (snakeGrid[x][y] instanceof EmptyTile){
+        if (snakeGrid[x][y] instanceof EmptyTile && !(snakeGrid[x][y] instanceof SnakeTile)){
             snakeGrid[x][y]=new FruitTile(x,y);
                 }
 

@@ -1,8 +1,13 @@
 package com.example.gaygames.ui.gamesui.Snake;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,37 +27,69 @@ import games.Snake.Tile;
 import games.Snake.SwipeListener;
 
 public class SnakeActivity extends AppCompatActivity {
-    RelativeLayout relative_layout;
-    SwipeListener SwipeListener;
-    LinkedList<Tile> Snake;
-    Direction nextDirection;
-    TextView ShowSwipe;
-    SnakeGrid Grid;
-    ScheduledFuture<?> f;
+    private RelativeLayout relative_layout;
+    private SwipeListener SwipeListener;
+    private LinkedList<Tile> Snake;
+    private Direction nextDirection;
+    private TextView ShowSwipe;
+    private SnakeGrid Grid;
+    private GridLayout gridLayout;
+    private ScheduledFuture<?> f;
+    private TextView tv;
 
+    int Score;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snake);
-        relative_layout = findViewById(R.id.relative_layout);
-        ShowSwipe = findViewById(R.id.textView2);
-        SwipeListener = new SwipeListener(relative_layout,this,ShowSwipe);
+        relative_layout = findViewById(R.id.constraint_lyato);
+        gridLayout = findViewById(R.id.griddy_layout);
+        tv = findViewById(R.id.textView2);
+
+        SwipeListener = new SwipeListener(relative_layout,this);
         // Initialize grid
-        Grid = new SnakeGrid(10,10);
+        Grid = new SnakeGrid(20,20);
+        Score=0;
+        tv.setText("Score: "+Score);
         // Initialize snake
         Snake = new LinkedList<>();
         Snake.add(new SnakeTile(Grid.getSnakeGrid().length-1,Grid.getInitialXPosition()));
         Snake.add(new SnakeTile(Grid.getSnakeGrid().length-2,Grid.getInitialXPosition()));
         Snake.add(new SnakeTile(Grid.getSnakeGrid().length-3,Grid.getInitialXPosition()));
+        runOnUiThread(() -> { for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                ImageView imageView = new ImageView(this);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width =0;
+                params.height = 0;
+                params.columnSpec = GridLayout.spec(j, 1f);
+                params.rowSpec = GridLayout.spec(i, 1f);
+                imageView.setLayoutParams(params);
+                gridLayout.addView(imageView);
+
+                String X = Grid.getSnakeGrid()[i][j].revealTile();
+                if (X.equals("Empty"))
+                    imageView.setImageResource(R.drawable.grass);
+                if (X.equals("Snake"))
+                    imageView.setImageResource(R.drawable.black);
+                if (X.equals("Fruit"))
+                    imageView.setImageResource(R.drawable.apple);
+            }
+        }});
+
+
         //Snake initially goes up
         nextDirection=Direction.Up;
 
-        int deltaT=500;
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
+        int deltaT=100;
+        ;
+            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+            f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
+        }
 
-    }
-
+    @SuppressLint("SetTextI18n")
     public void updateBoard(){
         int newRow = checkIncomingTile().getRow();
         int newCol = checkIncomingTile().getCol();
@@ -63,6 +100,8 @@ public class SnakeActivity extends AppCompatActivity {
             Grid.getSnakeGrid()[newRow][newCol]=new SnakeTile(newRow,newCol);
             Snake.add(new SnakeTile(newRow,newCol));
             Grid.generateFruitTile();
+            Score++;
+            tv.setText("Score: "+Score);
         }
 
         else if (checkIncomingTile().revealTile().equals("Snake")){
@@ -77,17 +116,21 @@ public class SnakeActivity extends AppCompatActivity {
 
         for (int i=0;i<Grid.getSnakeGrid().length;i++){
             for (int x=0;x<Grid.getSnakeGrid()[0].length;x++){
+                ImageView imageView = (ImageView) gridLayout.getChildAt(i * 20 + x);
                 if (Grid.getSnakeGrid()[i][x].revealTile().equals("Snake")){
-                    System.out.print("1");
+                    runOnUiThread(() -> imageView.setImageResource(R.drawable.black));
                 }
                 else if (Grid.getSnakeGrid()[i][x].revealTile().equals("Fruit")){
-                    System.out.print("F");
+                    runOnUiThread(() -> imageView.setImageResource(R.drawable.apple));
+
+
                 }
                 else if (Grid.getSnakeGrid()[i][x].revealTile().equals("Empty")){
-                    System.out.print("0");
+
+                    runOnUiThread(() -> imageView.setImageResource(R.drawable.grass));
                 }
             }
-            System.out.println(" ");
+
         }
     }
     public Tile checkIncomingTile(){
@@ -110,6 +153,8 @@ public class SnakeActivity extends AppCompatActivity {
         catch(IndexOutOfBoundsException e){
             return Grid.getSnakeGrid()[exRow][exCol];
         }}
+
+
 
     public void setDirection(Direction direction) {
         nextDirection = direction;

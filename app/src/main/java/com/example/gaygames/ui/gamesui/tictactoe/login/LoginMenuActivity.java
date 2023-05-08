@@ -1,4 +1,4 @@
-package com.example.gaygames.ui.login;
+package com.example.gaygames.ui.gamesui.tictactoe.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,7 +61,7 @@ public class LoginMenuActivity extends AppCompatActivity {
                         JSONArray responseArray = new JSONArray(response);
                         JSONObject curObject = responseArray.getJSONObject( 0 );
                         if(curObject.getInt("correct") == 1) {
-                            UserData.initialize(curObject.getInt("AccountID"), this);
+                            //UserData.initialize(curObject.getInt("AccountID"), this);
                             goHome();
                         }  else {
                             Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();

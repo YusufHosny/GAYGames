@@ -10,7 +10,7 @@ import com.example.gaygames.ui.gamesui.Snake.SnakeActivity;
 public class SwipeListener implements View.OnTouchListener{
     GestureDetector GestureDetector;
 
-    public SwipeListener(View view, SnakeActivity snakeGame, TextView tv){
+    public SwipeListener(View view, SnakeActivity snakeGame){
         int threshold = 100;
         int velocity_threshold=100;
 
@@ -29,12 +29,10 @@ public class SwipeListener implements View.OnTouchListener{
                                     if (diffX > 0) {
                                         // Swipe right
                                         snakeGame.setDirection(Direction.Right);
-                                        tv.setText("RIGHT");
 
                                     } else {
                                         // Swipe left
                                         snakeGame.setDirection(Direction.Left);
-                                        tv.setText("LEFT");
                                     }
                                     return true;
                                 }
@@ -43,11 +41,9 @@ public class SwipeListener implements View.OnTouchListener{
                                     if (diffY > 0) {
                                         // Swipe down
                                         snakeGame.setDirection(Direction.Down);
-                                        tv.setText("DOWN");
                                     } else {
                                         // Swipe up
                                         snakeGame.setDirection(Direction.Up);
-                                        tv.setText("UP");
                                     }
                                 }
                                 return true;
