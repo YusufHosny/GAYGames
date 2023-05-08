@@ -25,8 +25,12 @@
 
     <string name="tictactoeMenuTxt">TicTacToe Menu</string>
     <string name="tttplaybutton">Play</string>
+    <string name="tttnewmp">Create Game</string>
+    <string name="tttjoinmp">Join Game By Code</string>
+    <string name="tttcodeTxt">Enter Code</string>
     <string name="ttt1pTxt">Singleplayer</string>
     <string name="tttmpTxt">Multiplayer</string>
+
 
 
 

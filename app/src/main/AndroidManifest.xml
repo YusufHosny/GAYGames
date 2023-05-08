@@ -20,7 +20,10 @@
             android:name=".ui.gamesui.Snake.SnakeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.gamesui.tictactoe.login.LoginMenuActivity"
+            android:name=".ui.gamesui.tictactoe.TicTacToeMPActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginMenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
