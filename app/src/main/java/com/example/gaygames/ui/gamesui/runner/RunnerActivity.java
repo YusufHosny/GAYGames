@@ -70,6 +70,7 @@ public class RunnerActivity extends AppCompatActivity {
                 nextFrame();
                 if(gameDone) {
                     f.cancel(true);
+
                 }
             }, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
 

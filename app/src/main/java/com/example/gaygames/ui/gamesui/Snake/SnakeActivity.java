@@ -1,7 +1,6 @@
 package com.example.gaygames.ui.gamesui.Snake;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.gaygames.R;
+import com.example.gaygames.ui.gamesui.general.gamePopUpMenu;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
@@ -30,14 +30,14 @@ public class SnakeActivity extends AppCompatActivity {
     private RelativeLayout relative_layout;
     private SwipeListener SwipeListener;
     private LinkedList<Tile> Snake;
-    private Direction nextDirection;
+    private Direction nextDirection,nextOppositeDirection,currentDirection,currentOppositeDirection;
     private TextView ShowSwipe;
     private SnakeGrid Grid;
     private GridLayout gridLayout;
     private ScheduledFuture<?> f;
-    private TextView tv;
+    private TextView scoreTV, highScoreTV;
 
-    int Score;
+    int Score, HighScore;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -46,13 +46,20 @@ public class SnakeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_snake);
         relative_layout = findViewById(R.id.constraint_lyato);
         gridLayout = findViewById(R.id.griddy_layout);
-        tv = findViewById(R.id.textView2);
+        scoreTV = findViewById(R.id.scoreTV);
+        highScoreTV = findViewById(R.id.highestScoreTV);
+
 
         SwipeListener = new SwipeListener(relative_layout,this);
         // Initialize grid
         Grid = new SnakeGrid(20,20);
         Score=0;
-        tv.setText("Score: "+Score);
+        HighScore = Score;
+        scoreTV.setText("Score: "+Score);
+        highScoreTV.setText("High score: "+HighScore);
+
+        gamePopUpMenu gamePopUpMenu = com.example.gaygames.ui.gamesui.general.gamePopUpMenu.newInstance("Z","A");
+
         // Initialize snake
         Snake = new LinkedList<>();
         Snake.add(new SnakeTile(Grid.getSnakeGrid().length-1,Grid.getInitialXPosition()));
@@ -79,9 +86,11 @@ public class SnakeActivity extends AppCompatActivity {
             }
         }});
 
-
         //Snake initially goes up
+        currentDirection=Direction.Up;
+        currentOppositeDirection=Direction.Down;
         nextDirection=Direction.Up;
+        nextOppositeDirection=Direction.Down;
 
         int deltaT=100;
         ;
@@ -101,11 +110,13 @@ public class SnakeActivity extends AppCompatActivity {
             Snake.add(new SnakeTile(newRow,newCol));
             Grid.generateFruitTile();
             Score++;
-            tv.setText("Score: "+Score);
+            scoreTV.setText("Score: " + Score);
         }
 
         else if (checkIncomingTile().revealTile().equals("Snake")){
-            System.out.println("Game Over");
+            f.cancel(true);
+            getSupportFragmentManager().beginTransaction().replace(R.id.constraint_lyato, new gamePopUpMenu()).commit();
+
         }
         else {
             Grid.getSnakeGrid()[newRow][newCol]=new SnakeTile(newRow,newCol);
@@ -122,28 +133,36 @@ public class SnakeActivity extends AppCompatActivity {
                 }
                 else if (Grid.getSnakeGrid()[i][x].revealTile().equals("Fruit")){
                     runOnUiThread(() -> imageView.setImageResource(R.drawable.apple));
-
-
                 }
                 else if (Grid.getSnakeGrid()[i][x].revealTile().equals("Empty")){
 
                     runOnUiThread(() -> imageView.setImageResource(R.drawable.grass));
                 }
             }
-
         }
     }
     public Tile checkIncomingTile(){
         int lastRow = Snake.getLast().getRow();
         int lastCol = Snake.getLast().getCol();
-        if(nextDirection== Direction.Left)
-            return checkOutOfBounds(lastRow,lastCol-1,lastRow,Grid.getSnakeGrid()[0].length-1);
-        else if(nextDirection== Direction.Right)
-            return checkOutOfBounds(lastRow,lastCol+1,lastRow,0);
-        else if ((nextDirection== Direction.Up))
-            return checkOutOfBounds(lastRow-1,lastCol,Grid.getSnakeGrid().length-1,lastCol);
-        else
-            return checkOutOfBounds(lastRow+1,lastCol,0,lastCol);
+        if (currentOppositeDirection!=nextDirection){
+            currentDirection = nextDirection;
+            currentOppositeDirection=nextOppositeDirection;
+            if(currentDirection== Direction.Left)
+                return checkOutOfBounds(lastRow,lastCol-1,lastRow,Grid.getSnakeGrid()[0].length-1);
+            else if(currentDirection== Direction.Right)
+                return checkOutOfBounds(lastRow,lastCol+1,lastRow,0);
+            else if ((currentDirection== Direction.Up))
+                return checkOutOfBounds(lastRow-1,lastCol,Grid.getSnakeGrid().length-1,lastCol);
+            else
+                return checkOutOfBounds(lastRow+1,lastCol,0,lastCol);
+        }
+            currentDirection = nextOppositeDirection;
+            currentOppositeDirection = nextDirection;
+            nextDirection = currentDirection;
+            nextOppositeDirection=currentOppositeDirection;
+
+            return this.checkIncomingTile();
+
     }
 
     public Tile checkOutOfBounds(int newRow, int newCol, int exRow, int exCol){
@@ -154,9 +173,9 @@ public class SnakeActivity extends AppCompatActivity {
             return Grid.getSnakeGrid()[exRow][exCol];
         }}
 
-
-
-    public void setDirection(Direction direction) {
+    public void setDirection(Direction direction,Direction opposite) {
         nextDirection = direction;
+        nextOppositeDirection = opposite;
     }
+
 }
