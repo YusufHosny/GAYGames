@@ -1,5 +1,6 @@
 package com.example.gaygames.ui.gamesui.runner;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -69,7 +70,7 @@ public class RunnerActivity extends AppCompatActivity {
         f = executor.scheduleAtFixedRate(() -> {
                 nextFrame();
                 if(gameDone) {
-                    f.cancel(true);
+                    f.cancel(false);
                 }
             }, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
 
@@ -108,6 +109,11 @@ public class RunnerActivity extends AppCompatActivity {
 
     public void setGameDone(boolean g) {
         gameDone = g;
+
+        if(g) runOnUiThread( () -> {
+            Intent intent = new Intent(this, RunnerLeaderboardActivity.class);
+            startActivity(intent);
+        });
     }
 
 

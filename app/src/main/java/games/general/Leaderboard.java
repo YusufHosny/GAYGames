@@ -3,6 +3,8 @@ package games.general;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -21,14 +23,18 @@ public class Leaderboard {
 
     private String requestURL;
     private String addScoreURL;
-    private HashMap<String, Integer> leaderboard; // name and score key value pair
+    private final HashMap<String, Integer> leaderboard; // name and score key value pair
+
+    Leaderboard() {
+        leaderboard = new HashMap<>();
+    }
 
 
     // add a score to the local and online leaderboard
     public void addScore(Context c, String playerName, int score) {
         RequestQueue requestQueue = Volley.newRequestQueue(c);
         StringRequest submitRequest = new StringRequest(Request.Method.GET,
-                addScoreURL, // TODO THE REST OF THE URL
+                addScoreURL + playerName + "/" + score,
                 response -> leaderboard.put(playerName, score),
                 error -> Log.e( "LeaderboardDB", error.getLocalizedMessage(), error )
         );
@@ -38,7 +44,7 @@ public class Leaderboard {
 
 
     // update the leaderboard to the latest data
-    public void update(Context c) {
+    public void update(AppCompatActivity c) {
         RequestQueue requestQueue = Volley.newRequestQueue(c);
         StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL,
                 response -> {
@@ -64,7 +70,7 @@ public class Leaderboard {
 
 
     // sort leaderboard
-    private LinkedHashMap<String, Integer> getSortedLeaderboard() {
+    public LinkedHashMap<String, Integer> getSortedLeaderboard() {
         // create new arraylist of entries
         ArrayList<Map.Entry<String, Integer>> entryList = new ArrayList<>(leaderboard.entrySet());
 
