@@ -80,6 +80,9 @@ public class TicTacToeMPActivity extends AppCompatActivity {
         // set the code text
         ((TextView) findViewById(R.id.TTTtopTxt)).setText(TicTacToeMPData.getCode(matchId));
 
+        // set bottom text
+        ((TextView) findViewById(R.id.TTTbtmTxt)).setText("Multiplayer");
+
         // schedule the updates
         ScheduledExecutorService s = Executors.newScheduledThreadPool(1);
         f = s.scheduleAtFixedRate(this::tttUpdate, 2, 2, TimeUnit.SECONDS);

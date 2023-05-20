@@ -2,11 +2,11 @@ package games.general;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 public class GameButton {
 
-    public GameButton(Button b, Game g) {
+    public GameButton(ImageButton b, Game g) {
         // Button that opens this game
         // Game class which has the activity and start method
 

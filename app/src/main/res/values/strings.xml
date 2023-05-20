@@ -4,10 +4,11 @@
     <!-- Home Activity -->
     <string name="title_activity_home">Home</string>
 
-    <string name="placeholder_game1">Gay</string>
-    <string name="placeholder_game2">Gay 2</string>
-    <string name="placeholder_game3">Gay 3</string>
-    <string name="placeholder_game4">Gay 4</string>
+    <string name="game1">Placeholder</string>
+    <string name="game2">TicTacToe</string>
+    <string name="game3">Runner</string>
+    <string name="game4">Rock Paper Scissors</string>
+    <string name="game5">Snake</string>
 
     <!-- Login Activity -->
     <string name="LoginButton">Login</string>
@@ -19,7 +20,7 @@
     <!-- TicTacToe -->
     <string name="tictactoeBlank"> </string>
     <string name="tictactoeToptxt"> Tic Tac Toe </string>
-    <string name="tictactoeBtmTxt"> BOTTOM TEXT </string>
+    <string name="tictactoeBtmTxt"> SinglePlayer </string>
 
     <string name="btmTxtWon">GAME DONE! %1$s won.</string>
 
@@ -37,6 +38,8 @@
     <!-- Infinite Runner -->
     <string name="runnerIconDescription"> Runner Icon </string>
     <string name="initialScore">0</string>
+
+    <string name="leaderboardTop"> Leaderboard </string>
 
     <!-- RockPaperScissors-->
     <string name="rockButton1"> rockButton </string>

@@ -79,6 +79,13 @@ public class RunnerActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        f.cancel(true);
+        this.finish();
+    }
+
     // initialize the game
     public void initialize() {
         // set default values
