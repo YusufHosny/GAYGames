@@ -39,6 +39,8 @@
     <string name="runnerIconDescription"> Runner Icon </string>
     <string name="initialScore">0</string>
 
+    <string name="parallaxbg"> parallax background component</string>
+
     <string name="leaderboardTop"> Leaderboard </string>
 
     <!-- RockPaperScissors-->
