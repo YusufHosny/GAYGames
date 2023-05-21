@@ -78,9 +78,9 @@ public class Leaderboard {
         // sort arraylist with comparator that sorts by value, then key for same values
         entryList.sort((e1, e2) -> {
             if (e1.getValue().equals(e2.getValue())) {
-                return e1.getKey().compareTo(e2.getKey());
+                return - e1.getKey().compareTo(e2.getKey());
             }
-            return e1.getValue().compareTo(e2.getValue());
+            return - e1.getValue().compareTo(e2.getValue());
         });
 
         // add arraylist values in order to linked hashmap

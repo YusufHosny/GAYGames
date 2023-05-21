@@ -2,21 +2,32 @@ package com.example.gaygames.ui.gamesui.runner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gaygames.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import games.general.UserData;
 import games.runner.Obstacle;
 import games.runner.ObstacleFactory;
+import games.runner.ParallaxBackground;
 import games.runner.Runner;
 
 public class RunnerActivity extends AppCompatActivity {
@@ -44,6 +55,8 @@ public class RunnerActivity extends AppCompatActivity {
     private int score;
 
     private TextView scoreView;
+
+    ParallaxBackground bg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +113,21 @@ public class RunnerActivity extends AppCompatActivity {
         obs = obstacleFactory.createObstactle();
 
 
+        bg = new ParallaxBackground(findViewById(R.id.parallaxA1), findViewById(R.id.parallaxA2),
+                findViewById(R.id.parallaxB1), findViewById(R.id.parallaxB2),
+                findViewById(R.id.parallaxC1), findViewById(R.id.parallaxC2), 160);
+
+
     }
 
     public void nextFrame() {
         scrollSpeed += speedIncrease;
         runner.next();
         obs.next(scrollSpeed);
+
+        bg.updateSpd(scrollSpeed);
+        bg.next();
+
         // if theres a collision end the game
         if(obs.checkCollision(runner)) {
             setGameDone(true);
@@ -117,10 +139,46 @@ public class RunnerActivity extends AppCompatActivity {
     public void setGameDone(boolean g) {
         gameDone = g;
 
-        if(g) runOnUiThread( () -> {
+
+        if(g) {
+            // check if highscore and if it is update leaderboard
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+            StringRequest sendHighscore = new StringRequest( Request.Method.GET,
+                    "https://studev.groept.be/api/a22pt107/addScoreRunner/" + UserData.accountID + "/" + score,
+                    response -> {},
+                    error -> Log.e("sendHighscoreRunner", error.getLocalizedMessage(), error));
+
+
+            StringRequest getHighscore = new StringRequest( Request.Method.GET,
+                    "https://studev.groept.be/api/a22pt107/getHighestPersonalScoreRunner/" + UserData.accountID,
+                    response -> {
+                        try {
+                            JSONArray responseArray = new JSONArray(response);
+                            JSONObject object = responseArray.getJSONObject(0);
+
+                            int prevHighscore = object.getInt("score");
+
+                            if(prevHighscore < score) {
+                                requestQueue.add(sendHighscore);
+                            }
+
+                        } catch(JSONException e) {
+                            Log.e( "runnerGetScore", e.getMessage(), e );
+                            requestQueue.add(sendHighscore);
+                        }
+                    },
+                    error -> Log.e( "runnerGetScore", error.getLocalizedMessage(), error )
+            );
+
+            requestQueue.add(getHighscore);
+
+            // show leaderboard
+            runOnUiThread( () -> {
             Intent intent = new Intent(this, RunnerLeaderboardActivity.class);
             startActivity(intent);
         });
+        }
     }
 
 
