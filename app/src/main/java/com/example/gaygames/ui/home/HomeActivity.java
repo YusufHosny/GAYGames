@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gaygames.R;
 
+import games.PacMan.PacManGame;
 import games.RockPaperScissors.RPSGame;
 import games.Snake.SnakeGame;
 import games.TicTacToe.TicTacToeGame;
@@ -30,8 +31,10 @@ public class HomeActivity extends AppCompatActivity {
         GameButton runnerGameButton = new GameButton((Button) findViewById(R.id.button3), new RunnerGame());
 
         GameButton RPSGameButton = new GameButton((Button) findViewById(R.id.button4), new RPSGame());
+
         GameButton SnakeGameButton = new GameButton((Button) findViewById(R.id.button5), new SnakeGame());
 
+        GameButton PacManGameButton = new GameButton((Button) findViewById(R.id.button6), new PacManGame());
     }
 
 

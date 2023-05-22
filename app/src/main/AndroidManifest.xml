@@ -14,6 +14,9 @@
         android:theme="@style/Theme.GAYGames"
         tools:targetApi="31">
         <activity
+            android:name=".ui.gamesui.PacMan.PacManActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.gamesui.runner.RunnerLeaderboardActivity"
             android:exported="false" />
         <activity

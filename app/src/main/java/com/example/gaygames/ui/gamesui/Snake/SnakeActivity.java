@@ -84,7 +84,7 @@ public class SnakeActivity extends AppCompatActivity {
         nextDirection=Direction.Up;
 
         int deltaT=100;
-        ;
+
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
         }
