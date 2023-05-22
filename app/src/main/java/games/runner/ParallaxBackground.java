@@ -18,11 +18,6 @@ public class ParallaxBackground implements Animatable {
         layer3 = new ScrollImageView(l3A, l3B, spdMax);
     }
 
-
-    public void start() {
-
-    }
-
     public void updateSpd() {
         int spd = RunnerActivity.scrollSpeed;
 

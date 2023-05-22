@@ -3,6 +3,8 @@ package games.runner;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
 
 import games.general.Animatable;
@@ -32,10 +34,6 @@ public class Runner implements Animatable {
         ground = position;
     }
 
-    public void start() {
-
-    }
-
 
 
     // next frame updates for runner object
@@ -46,7 +44,7 @@ public class Runner implements Animatable {
         // clip position to ground
         position = Math.min(position, ground);
 
-        img.setY(position);
+        ((AppCompatActivity) img.getContext()).runOnUiThread( () -> img.setY(position));
 
         // update speed
         vertSpeed -= RunnerActivity.gravity;

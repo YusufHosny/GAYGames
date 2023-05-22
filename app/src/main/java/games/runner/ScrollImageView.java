@@ -18,17 +18,14 @@ public class ScrollImageView implements Animatable {
         scroll2 = view2;
         spd = speed;
 
+        // set to out of bounds
+        scroll2.setX(scroll1.getWidth());
     }
 
     public void setSpd(int newSpd) {
         spd = newSpd;
     }
 
-
-    public void start() {
-        // set to out of bounds
-        scroll2.setX(scroll1.getWidth());
-    }
 
     public void repeat() {
         ((AppCompatActivity) scroll2.getContext()).runOnUiThread( () -> {

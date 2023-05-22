@@ -4,6 +4,7 @@ import android.util.DisplayMetrics;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.gaygames.R;
@@ -59,19 +60,16 @@ public class Obstacle implements Animatable {
     }
 
 
-    public void start() {
-
-    }
-
     public void repeat() {
         int speed = RunnerActivity.scrollSpeed;
         // update position
         position -= speed * RunnerActivity.deltaT * 0.001;
-        img.setX(position);
 
-        if(getPosition() < -100f) { // if out of screen move to start of screen
-           setPosition(initPos);
-           isBefore = true;
+        ((AppCompatActivity) img.getContext()).runOnUiThread( () -> img.setX(position));
+
+        if (getPosition() < -100f) { // if out of screen move to start of screen
+            setPosition(initPos);
+            isBefore = true;
         }
 
     }

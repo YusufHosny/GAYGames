@@ -63,7 +63,6 @@ public class RunnerActivity extends AppCompatActivity implements Animatable {
         // create animator
         animator = new Animator(deltaT);
 
-
         // set scoreView to correct id
         scoreView = findViewById(R.id.scoreView);
 
@@ -72,11 +71,7 @@ public class RunnerActivity extends AppCompatActivity implements Animatable {
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-
-                // start the animator
                 start();
-                animator.start();
-                animator.add(RunnerActivity.this);
 
                 // Remove the listener to avoid memory leaks
                 rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
@@ -119,6 +114,7 @@ public class RunnerActivity extends AppCompatActivity implements Animatable {
         animator.add(runner);
         animator.add(obs);
         animator.add(bg);
+        animator.add(this);
 
         // begin animation
         animator.animate();
