@@ -9,8 +9,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.gaygames.R;
 import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
 
+import games.general.Animatable;
 
-public class Obstacle {
+
+public class Obstacle implements Animatable {
 
     private final ImageView img;
 
@@ -56,7 +58,13 @@ public class Obstacle {
         isBefore = true;
     }
 
-    public void next(float speed) {
+
+    public void start() {
+
+    }
+
+    public void repeat() {
+        int speed = RunnerActivity.scrollSpeed;
         // update position
         position -= speed * RunnerActivity.deltaT * 0.001;
         img.setX(position);

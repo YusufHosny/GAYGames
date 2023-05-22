@@ -5,7 +5,9 @@ import android.widget.ImageView;
 
 import com.example.gaygames.ui.gamesui.runner.RunnerActivity;
 
-public class Runner {
+import games.general.Animatable;
+
+public class Runner implements Animatable {
 
     private float position;
 
@@ -28,14 +30,16 @@ public class Runner {
         position = img.getY();
 
         ground = position;
+    }
 
+    public void start() {
 
     }
 
 
 
     // next frame updates for runner object
-    public void next() {
+    public void repeat() {
         // update position, done with a - since the position starts from the top
         position -= vertSpeed * RunnerActivity.deltaT * 0.001;
 
@@ -46,10 +50,6 @@ public class Runner {
 
         // update speed
         vertSpeed -= RunnerActivity.gravity;
-
-
-
-
     }
 
     public void jump() {
@@ -57,8 +57,6 @@ public class Runner {
             vertSpeed = 1500;
         }
     }
-
-    public void duck() {}
 
 
     public float getPosition() {
