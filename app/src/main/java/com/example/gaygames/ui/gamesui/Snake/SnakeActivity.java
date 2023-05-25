@@ -3,15 +3,26 @@ package com.example.gaygames.ui.gamesui.Snake;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gaygames.R;
 import com.example.gaygames.ui.gamesui.general.gamePopUpMenu;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.concurrent.Executors;
@@ -23,8 +34,9 @@ import games.Snake.Direction;
 import games.Snake.EmptyTile;
 import games.Snake.SnakeGrid;
 import games.Snake.SnakeTile;
-import games.Snake.Tile;
 import games.Snake.SwipeListener;
+import games.Snake.Tile;
+import games.general.UserData;
 
 public class SnakeActivity extends AppCompatActivity {
     private RelativeLayout relative_layout;
@@ -98,13 +110,12 @@ public class SnakeActivity extends AppCompatActivity {
             f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
         }
 
-    @SuppressLint("SetTextI18n")
     public void updateBoard(){
         int newRow = checkIncomingTile().getRow();
         int newCol = checkIncomingTile().getCol();
         int firstRow = Snake.getFirst().getRow();
         int firstCol = Snake.getFirst().getCol();
-        //
+        //x
         if (checkIncomingTile().revealTile().equals("Fruit")){
             Grid.getSnakeGrid()[newRow][newCol]=new SnakeTile(newRow,newCol);
             Snake.add(new SnakeTile(newRow,newCol));
@@ -116,7 +127,9 @@ public class SnakeActivity extends AppCompatActivity {
         else if (checkIncomingTile().revealTile().equals("Snake")){
             f.cancel(true);
             getSupportFragmentManager().beginTransaction().replace(R.id.constraint_lyato, new gamePopUpMenu()).commit();
-
+            System.out.println("Game Over");
+            Log.d("ydebug", "a");
+            gameDone();
         }
         else {
             Grid.getSnakeGrid()[newRow][newCol]=new SnakeTile(newRow,newCol);
@@ -178,4 +191,44 @@ public class SnakeActivity extends AppCompatActivity {
         nextOppositeDirection = opposite;
     }
 
+
+    private void gameDone() {
+        // check if highscore and if it is update leaderboard
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest sendHighscore = new StringRequest( Request.Method.GET,
+                "https://studev.groept.be/api/a22pt107/addScoreSnake/" + UserData.accountID + "/" + Score,
+                response -> {},
+                error -> Log.e("sendHighscoreRunner", error.getLocalizedMessage(), error));
+
+
+        StringRequest getHighscore = new StringRequest( Request.Method.GET,
+                "https://studev.groept.be/api/a22pt107/getHighestPersonalScoreSnake/" + UserData.accountID,
+                response -> {
+                    try {
+                        JSONArray responseArray = new JSONArray(response);
+                        JSONObject object = responseArray.getJSONObject(0);
+
+                        int prevHighscore = object.getInt("score");
+
+                        if(prevHighscore < Score) {
+                            requestQueue.add(sendHighscore);
+                        }
+
+                    } catch(JSONException e) {
+                        Log.e( "snakeGetScore", e.getMessage(), e );
+                        requestQueue.add(sendHighscore);
+                    }
+                },
+                error -> Log.e( "snakeGetScore", error.getLocalizedMessage(), error )
+        );
+
+        requestQueue.add(getHighscore);
+
+        // show leaderboard
+        runOnUiThread( () -> {
+            Intent intent = new Intent(this, SnakeLeaderboardActivity.class);
+            startActivity(intent);
+        });
+    }
 }

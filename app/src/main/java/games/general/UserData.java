@@ -41,6 +41,8 @@ public class UserData {
         accountID = ID;
         updateFriendsList(a);
         TicTacToeMPData.genCodeList();
+
+        leaderboardHashMap = new HashMap<>();
     }
 
     // update the friendslist
@@ -85,23 +87,27 @@ public class UserData {
         }
     }
 
-    public static void addLeaderboard(AppCompatActivity a) {
-        leaderboardHashMap.put(a.getClass(), new Leaderboard());
+    public static void addLeaderboard(Class<? extends AppCompatActivity> a) {
+        leaderboardHashMap.put(a, new Leaderboard());
     }
 
-    public static Leaderboard getLeaderboard(AppCompatActivity a) {
-        return leaderboardHashMap.get(a.getClass());
+    public static Leaderboard getLeaderboard(Class<? extends AppCompatActivity> a) {
+        if(leaderboardHashMap.get(a) == null) {
+            addLeaderboard(a);
+            return getLeaderboard(a);
+        }
+        return leaderboardHashMap.get(a);
     }
 
-    public static void updateLeaderboard(AppCompatActivity a) {
-        Objects.requireNonNull(leaderboardHashMap.get(a.getClass())).update(a);
+    public static void updateLeaderboard(AppCompatActivity a, Class<? extends AppCompatActivity> c) {
+        Objects.requireNonNull(leaderboardHashMap.get(c)).update(a);
     }
 
-    public static void setUpdateURL(AppCompatActivity a, String url) {
-        Objects.requireNonNull(leaderboardHashMap.get(a.getClass())).setRequestURL(url);
+    public static void setUpdateURL(Class<? extends AppCompatActivity> a, String url) {
+        getLeaderboard(a).setRequestURL(url);
     }
-    public static void setAddURL(AppCompatActivity a, String url) {
-        Objects.requireNonNull(leaderboardHashMap.get(a.getClass())).setAddScoreURL(url);
+    public static void setAddURL(Class<? extends AppCompatActivity> a, String url) {
+        getLeaderboard(a).setAddScoreURL(url);
     }
 
 }

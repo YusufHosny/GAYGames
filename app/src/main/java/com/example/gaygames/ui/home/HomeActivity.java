@@ -1,7 +1,7 @@
 package com.example.gaygames.ui.home;
 
 import android.os.Bundle;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,14 +23,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Create a GameButton for the placeholder game
-        GameButton firstGameButton = new GameButton((Button) findViewById(R.id.button1), new PlaceholderGame());
+        GameButton firstGameButton = new GameButton((ImageButton) findViewById(R.id.placeholderBtn), new PlaceholderGame());
 
-        GameButton tttGameButton = new GameButton((Button) findViewById(R.id.button2), new TicTacToeGame());
+        GameButton tttGameButton = new GameButton((ImageButton) findViewById(R.id.TTTBtn), new TicTacToeGame());
 
-        GameButton runnerGameButton = new GameButton((Button) findViewById(R.id.button3), new RunnerGame());
+        GameButton runnerGameButton = new GameButton((ImageButton) findViewById(R.id.runnerBtn), new RunnerGame());
 
-        GameButton RPSGameButton = new GameButton((Button) findViewById(R.id.button4), new RPSGame());
-        GameButton SnakeGameButton = new GameButton((Button) findViewById(R.id.button5), new SnakeGame());
+        GameButton RPSGameButton = new GameButton((ImageButton) findViewById(R.id.RPSBtn), new RPSGame());
+        GameButton SnakeGameButton = new GameButton((ImageButton) findViewById(R.id.snakeBtn), new SnakeGame());
 
     }
 

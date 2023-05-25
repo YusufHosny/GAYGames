@@ -5,7 +5,7 @@
     android:id="@+id/constraint_lyato"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#272525"
+    android:background="@drawable/homewp"
     tools:context=".ui.gamesui.Snake.SnakeActivity">
 
     <GridLayout
