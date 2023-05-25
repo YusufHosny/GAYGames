@@ -33,8 +33,6 @@
     <string name="tttmpTxt">Multiplayer</string>
 
 
-
-
     <!-- Infinite Runner -->
     <string name="runnerIconDescription"> Runner Icon </string>
     <string name="initialScore">0</string>
@@ -53,6 +51,13 @@
     <string name="textView1"> Player 1, your turn  </string>
     <string name="textView2"> Player 2 </string>
     <string name="loginImageLabel">loginImage</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment"> GAME OVER </string>
+    <string name="popUpPlayAgain"> Play Again </string>
+    <string name="popUpMainMenu"> Main Menu </string>
+    <string name="popUpLeaderboard"> Leaderboard </string>
+
 
 
 </resources>

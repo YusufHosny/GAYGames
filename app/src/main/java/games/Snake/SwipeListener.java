@@ -28,11 +28,11 @@ public class SwipeListener implements View.OnTouchListener{
                                 if (Math.abs(diffX) > threshold && Math.abs(velocityX) > velocity_threshold) {
                                     if (diffX > 0) {
                                         // Swipe right
-                                        snakeGame.setDirection(Direction.Right);
+                                        snakeGame.setDirection(Direction.Right,Direction.Left);
 
                                     } else {
                                         // Swipe left
-                                        snakeGame.setDirection(Direction.Left);
+                                        snakeGame.setDirection(Direction.Left,Direction.Right);
                                     }
                                     return true;
                                 }
@@ -40,10 +40,10 @@ public class SwipeListener implements View.OnTouchListener{
                                 if (Math.abs(diffY) > threshold && Math.abs(velocityY) > velocity_threshold) {
                                     if (diffY > 0) {
                                         // Swipe down
-                                        snakeGame.setDirection(Direction.Down);
+                                        snakeGame.setDirection(Direction.Down,Direction.Up);
                                     } else {
                                         // Swipe up
-                                        snakeGame.setDirection(Direction.Up);
+                                        snakeGame.setDirection(Direction.Up,Direction.Down);
                                     }
                                 }
                                 return true;
