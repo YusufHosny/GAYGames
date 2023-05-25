@@ -55,6 +55,14 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
         leaderboard = UserData.getLeaderboard(gameClass).getSortedLeaderboard();
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
+
     private void displayLeaderboard() {
         renewLeaderboard();
 

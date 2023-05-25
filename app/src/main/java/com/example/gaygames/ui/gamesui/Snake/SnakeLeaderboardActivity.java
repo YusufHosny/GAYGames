@@ -48,6 +48,11 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 
     private void renewLeaderboard() {
         UserData.updateLeaderboard(this, gameClass);

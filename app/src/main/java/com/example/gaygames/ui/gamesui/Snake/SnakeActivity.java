@@ -1,9 +1,6 @@
 package com.example.gaygames.ui.gamesui.Snake;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.GridLayout;
@@ -70,7 +67,8 @@ public class SnakeActivity extends AppCompatActivity {
         scoreTV.setText("Score: "+Score);
         highScoreTV.setText("High score: "+HighScore);
 
-        gamePopUpMenu gamePopUpMenu = com.example.gaygames.ui.gamesui.general.gamePopUpMenu.newInstance("Z","A");
+        gamePopUpMenu gamePopUpMenu = com.example.gaygames.ui.gamesui
+                .general.gamePopUpMenu.newInstance("Z","A", SnakeLeaderboardActivity.class);
 
         // Initialize snake
         Snake = new LinkedList<>();
@@ -128,7 +126,6 @@ public class SnakeActivity extends AppCompatActivity {
             f.cancel(true);
             getSupportFragmentManager().beginTransaction().replace(R.id.constraint_lyato, new gamePopUpMenu()).commit();
             System.out.println("Game Over");
-            Log.d("ydebug", "a");
             gameDone();
         }
         else {
@@ -192,14 +189,14 @@ public class SnakeActivity extends AppCompatActivity {
     }
 
 
-    private void gameDone() {
+    public void gameDone() {
         // check if highscore and if it is update leaderboard
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest sendHighscore = new StringRequest( Request.Method.GET,
                 "https://studev.groept.be/api/a22pt107/addScoreSnake/" + UserData.accountID + "/" + Score,
                 response -> {},
-                error -> Log.e("sendHighscoreRunner", error.getLocalizedMessage(), error));
+                error -> Log.e("sendHighscoreSnake", error.getLocalizedMessage(), error));
 
 
         StringRequest getHighscore = new StringRequest( Request.Method.GET,
@@ -224,11 +221,5 @@ public class SnakeActivity extends AppCompatActivity {
         );
 
         requestQueue.add(getHighscore);
-
-        // show leaderboard
-        runOnUiThread( () -> {
-            Intent intent = new Intent(this, SnakeLeaderboardActivity.class);
-            startActivity(intent);
-        });
     }
 }

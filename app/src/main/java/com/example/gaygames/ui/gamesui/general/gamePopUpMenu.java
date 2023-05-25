@@ -1,21 +1,17 @@
 package com.example.gaygames.ui.gamesui.general;
 
-import static androidx.core.app.ActivityCompat.recreate;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.gaygames.R;
-import com.example.gaygames.ui.gamesui.Snake.SnakeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +29,9 @@ public class gamePopUpMenu extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ImageButton playAgain,mainMenu,leaderBoard;
+    private static Class<? extends AppCompatActivity> leaderboardActivity;
+
+    private ImageButton playAgain,mainMenu,leaderb;
     private TextView tv;
 
     public gamePopUpMenu() {
@@ -49,12 +47,13 @@ public class gamePopUpMenu extends Fragment {
      * @return A new instance of fragment gamePopUpMenu.
      */
     // TODO: Rename and change types and number of parameters
-    public static gamePopUpMenu newInstance(String param1, String param2) {
+    public static gamePopUpMenu newInstance(String param1, String param2, Class<? extends AppCompatActivity> leaderboard) {
         gamePopUpMenu fragment = new gamePopUpMenu();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        leaderboardActivity = leaderboard;
         return fragment;
     }
 
@@ -82,6 +81,12 @@ public class gamePopUpMenu extends Fragment {
         mainMenu.setOnClickListener(v -> {getActivity().finish();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();});
 
+        leaderb = view.findViewById(R.id.leaderboardButton);
+        leaderb.setOnClickListener(v -> {
+            // show leaderboard
+                Intent intent = new Intent(getContext(), leaderboardActivity);
+                startActivity(intent);
+        });
 
 
 
