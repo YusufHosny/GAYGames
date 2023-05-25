@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.gaygames.R;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link gamePopUpMenu#newInstance} factory method to
@@ -25,13 +27,8 @@ public class gamePopUpMenu extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private static Class<? extends AppCompatActivity> leaderboardActivity;
 
-    private ImageButton playAgain,mainMenu,leaderb;
     private TextView tv;
 
     public gamePopUpMenu() {
@@ -61,8 +58,9 @@ public class gamePopUpMenu extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            // TODO: Rename and change types of parameters
+            String mParam1 = getArguments().getString(ARG_PARAM1);
+            String mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
     }
@@ -73,15 +71,17 @@ public class gamePopUpMenu extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_pop_up_menu, container, false);
 
-        playAgain = view.findViewById(R.id.playAgainButton);
-        playAgain.setOnClickListener(v -> {getActivity().recreate();
+        ImageButton playAgain = view.findViewById(R.id.playAgainButton);
+        playAgain.setOnClickListener(v -> {
+            Objects.requireNonNull(getActivity()).recreate();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();});
 
-        mainMenu= view.findViewById(R.id.mainMenuButton);
-        mainMenu.setOnClickListener(v -> {getActivity().finish();
+        ImageButton mainMenu = view.findViewById(R.id.mainMenuButton);
+        mainMenu.setOnClickListener(v -> {
+            Objects.requireNonNull(getActivity()).finish();
             getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();});
 
-        leaderb = view.findViewById(R.id.leaderboardButton);
+        ImageButton leaderb = view.findViewById(R.id.leaderboardButton);
         leaderb.setOnClickListener(v -> {
             // show leaderboard
                 Intent intent = new Intent(getContext(), leaderboardActivity);

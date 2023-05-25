@@ -36,8 +36,6 @@ import games.Snake.Tile;
 import games.general.UserData;
 
 public class SnakeActivity extends AppCompatActivity {
-    private RelativeLayout relative_layout;
-    private SwipeListener SwipeListener;
     private LinkedList<Tile> Snake;
     private Direction nextDirection,nextOppositeDirection,currentDirection,currentOppositeDirection;
     private TextView ShowSwipe;
@@ -53,13 +51,13 @@ public class SnakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snake);
-        relative_layout = findViewById(R.id.constraint_lyato);
+        RelativeLayout relative_layout = findViewById(R.id.constraint_lyato);
         gridLayout = findViewById(R.id.griddy_layout);
         scoreTV = findViewById(R.id.scoreTV);
         highScoreTV = findViewById(R.id.highestScoreTV);
 
 
-        SwipeListener = new SwipeListener(relative_layout,this);
+        games.Snake.SwipeListener swipeListener = new SwipeListener(relative_layout, this);
         // Initialize grid
         Grid = new SnakeGrid(20,20);
         Score=0;
@@ -103,7 +101,6 @@ public class SnakeActivity extends AppCompatActivity {
         nextOppositeDirection=Direction.Down;
 
         int deltaT=100;
-        ;
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
         }
