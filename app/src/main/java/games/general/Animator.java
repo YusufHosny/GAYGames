@@ -32,7 +32,7 @@ public class Animator {
         f.cancel(true);
     }
 
-    public void nextFrame() {
+    private void nextFrame() {
 
         for (Animatable animatable: animatables) {
 

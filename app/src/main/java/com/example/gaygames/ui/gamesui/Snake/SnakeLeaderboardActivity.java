@@ -1,4 +1,4 @@
-package com.example.gaygames.ui.gamesui.runner;
+package com.example.gaygames.ui.gamesui.Snake;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -16,8 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import games.general.UserData;
 
-public class RunnerLeaderboardActivity extends AppCompatActivity {
-
+public class SnakeLeaderboardActivity extends AppCompatActivity {
     private Class<? extends AppCompatActivity> gameClass;
 
     private LinkedHashMap<String, Integer> leaderboard;
@@ -30,10 +29,10 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
 
-        gameClass = RunnerActivity.class;
+        gameClass = SnakeActivity.class;
 
-        UserData.setAddURL(gameClass, "https://studev.groept.be/api/a22pt107/addScoreRunner/");
-        UserData.setUpdateURL(gameClass, "https://studev.groept.be/api/a22pt107/getLeaderboardRunner");
+        UserData.setAddURL(gameClass, "https://studev.groept.be/api/a22pt107/addScoreSnake/");
+        UserData.setUpdateURL(gameClass, "https://studev.groept.be/api/a22pt107/getLeaderboardSnake");
 
         renewLeaderboard();
 
@@ -44,8 +43,8 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
 
         ScheduledExecutorService s = Executors.newScheduledThreadPool(1);
         s.scheduleAtFixedRate(this::displayLeaderboard, 20, 2000, TimeUnit.MILLISECONDS);
-        
-        
+
+
 
     }
 
