@@ -42,6 +42,7 @@ public class UserData {
         updateFriendsList(a);
         TicTacToeMPData.genCodeList();
 
+        friendsList = new ArrayList<>();
         leaderboardHashMap = new HashMap<>();
     }
 
@@ -68,6 +69,8 @@ public class UserData {
 
     // parse the friendslist into friend ids
     public static void parseFriendString(String friendString) {
+
+        friendsList = new ArrayList<>();
         // if friendstring is empty, do nothing
         if(friendString.equals(" ")) return;
 
@@ -85,6 +88,9 @@ public class UserData {
                 collectorString.append(friendString.charAt(i));
             }
         }
+        // add final friend
+        int friend = Integer.parseInt(collectorString.toString());
+        friendsList.add(friend);
     }
 
     public static void addLeaderboard(Class<? extends AppCompatActivity> a) {

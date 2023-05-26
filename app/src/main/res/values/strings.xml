@@ -10,6 +10,9 @@
     <string name="game4">Rock Paper Scissors</string>
     <string name="game5">Snake</string>
 
+    <!-- Home Activity -->
+    <string name="friendsTitle">Friends</string>
+
     <!-- Login Activity -->
     <string name="LoginButton">Login</string>
     <string name="CreateAccountButton">Create Account</string>
@@ -57,7 +60,6 @@
     <string name="popUpPlayAgain"> Play Again </string>
     <string name="popUpMainMenu"> Main Menu </string>
     <string name="popUpLeaderboard"> Leaderboard </string>
-
 
 
 </resources>
