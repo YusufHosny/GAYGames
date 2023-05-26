@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,18 +16,20 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import games.PacMan.Ghost;
 import games.PacMan.PMBoard;
 import games.PacMan.PacMan;
 
 public class PacManActivity extends AppCompatActivity {
 
-    GridLayout gridLayout;
-    int xPosition,yPosition;
+    private GridLayout gridLayout;
+    private int xPosition,yPosition;
     int[][] Board = PMBoard.getPMBoard();
-    TextView scoreText;
-    ImageButton leftButton,rightButton,upButton,downButton;
+    private TextView scoreText;
+    private ImageButton leftButton,rightButton,upButton,downButton;
+    private ScheduledFuture<?> f,f1;
 
-    private ScheduledFuture<?> f;
+    private Ghost redGhost;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -47,7 +48,7 @@ public class PacManActivity extends AppCompatActivity {
 
         // Spawning Pacman at the center of the map
         PacMan.spawnPacMan();
-
+        redGhost = new Ghost(1,1,2);
         // Printing out board with Grid Layout of imageViews
         runOnUiThread(() ->
         { for (int i = 0; i < Board.length; i++) {
@@ -72,7 +73,7 @@ public class PacManActivity extends AppCompatActivity {
                     imageView.setImageResource(R.drawable.redghost);
                 }
                 else if (Board[i][j]==6){
-                    imageView.setImageResource(R.drawable.pmopenmouth);
+                    imageView.setImageResource(R.drawable.pmopenmouthright);
                 }
                 else if (Board[i][j]==9){
                     imageView.setImageResource(R.drawable.blackbackground);
@@ -81,9 +82,11 @@ public class PacManActivity extends AppCompatActivity {
         }});
 
         // Scheduled Executor to periodically update the UI with the method updateBoardUI()
-        int deltaT=100;
+        int deltaT=200;
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         f = executor.scheduleAtFixedRate(this::updateBoardUI, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
+        int DeltaT=500;
+        f1 = executor.scheduleAtFixedRate(this::moveGhost, 5 * DeltaT, DeltaT, TimeUnit.MILLISECONDS);
     }
 
     @SuppressLint("SetTextI18n")
@@ -95,24 +98,49 @@ public class PacManActivity extends AppCompatActivity {
         int oldYPosition = PacMan.getyPosition();
 
         // Move PacMan based on button held
-        if (leftButton.isPressed())
-            PacMan.updatePosition(PacMan.getxPosition() - 1, PacMan.getyPosition());
-        if (rightButton.isPressed())
+        if (rightButton.isPressed()){
+            ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
+            runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
             PacMan.updatePosition(PacMan.getxPosition() + 1 , PacMan.getyPosition());
-        if (upButton.isPressed())
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthright));
+
+        }
+        if (leftButton.isPressed()){
+            ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
+            runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
+            PacMan.updatePosition(PacMan.getxPosition() - 1, PacMan.getyPosition());
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthleft));
+
+        }
+
+        if (upButton.isPressed()){
+            ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
+            runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
             PacMan.updatePosition(PacMan.getxPosition() , PacMan.getyPosition() - 1);
-        if (downButton.isPressed())
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthup));
+
+        }
+
+        if (downButton.isPressed()){
+            ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
+            runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
             PacMan.updatePosition(PacMan.getxPosition() , PacMan.getyPosition() + 1);
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() * Board[0].length) + PacMan.getxPosition());
+            runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthdown));
+        }
+    }
 
-        // Retrieve new position
-        int newXPosition = PacMan.getxPosition();
-        int newYPosition = PacMan.getyPosition();
+    public void moveGhost(){
+        // Move Red Ghost
 
-        // Update UI Grid
-        ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
-        runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-        ImageView imageView2 = (ImageView) gridLayout.getChildAt((newYPosition *Board[0].length) + newXPosition);
-        runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouth));
+        redGhost.moveByShortestPath();
+
+        ImageView imageView2 = (ImageView) gridLayout.getChildAt((redGhost.getY() *Board[0].length) + redGhost.getX());
+        runOnUiThread(() ->imageView2.setImageResource(R.drawable.redghost));
+
     }
 
 }
