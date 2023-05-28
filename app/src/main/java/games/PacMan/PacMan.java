@@ -2,10 +2,14 @@ package games.PacMan;
 
 public class PacMan {
 
-    static int xPosition,yPosition,Score,HP;
-    static int[][] Board = PMBoard.getPMBoard();
+    private int xPosition,yPosition,Score,HP;
+    private int[][] Board; // = PMBoard.getPMBoard();
 
-    public static void spawnPacMan(){
+    public PacMan(PMBoard pmBoard) {
+        Board = pmBoard.getPMBoard();
+    }
+
+    public void spawnPacMan(){
         HP = 3;
         Score = 0;
         xPosition = 14;  // Initial spawn point of pacman
@@ -13,14 +17,14 @@ public class PacMan {
         Board[yPosition][xPosition] = 6;
     }
 
-    public static void respawnPacMan(){
+    public void respawnPacMan(){
         Board[yPosition][xPosition] = 0;
         xPosition = 14;  // Initial spawn point of pacman
         yPosition = 17;
         Board[yPosition][xPosition] = 6;
     }
 
-    public static void updatePosition(int newXPosition, int newYPosition){
+    public void updatePosition(int newXPosition, int newYPosition){
         if (!outOfBounds(newXPosition,newYPosition)){
             if (!ghostCollision(newXPosition,newYPosition) && !wallCollision(newXPosition,newYPosition)){
                 // If we don't move out of the map and don't collide against a ghost or a wall, then
@@ -65,13 +69,13 @@ public class PacMan {
     }
 
     //////////// METHODS THAT CHECK THE NEXT TILE BASED ON POTENTIAL NEW POSITION //////////
-    public static boolean ghostCollision(int newXPosition, int newYPosition){
+    public boolean ghostCollision(int newXPosition, int newYPosition){
         // Returns True if we collide against a ghost
         return Board[newYPosition][newXPosition] == 2 || Board[newYPosition][newXPosition]== 3
                 || Board[newYPosition][newXPosition]== 4 || Board[newYPosition][newXPosition]== 5;
     }
 
-    public static boolean outOfBounds(int newXPosition, int newYPosition){
+    public boolean outOfBounds(int newXPosition, int newYPosition){
         // Returns True if the next position is out of bounds
            try{
                if (Board[newYPosition][newXPosition]==0 || Board[newYPosition][newXPosition]==9)
@@ -83,28 +87,28 @@ public class PacMan {
            return false;
     }
 
-    public static boolean wallCollision(int newXPosition, int newYPosition){
+    public boolean wallCollision(int newXPosition, int newYPosition){
         // Returns True if next position is a wall
         return Board[newYPosition][newXPosition] == 1;
     }
 
-    public static void decreaseHP(){
+    public void decreaseHP(){
         HP--;
     }
 
     ///////////////////////// GETTERS AND SETTERS ////////////////////////////////////////////////
-    public static int getxPosition(){
+    public int getxPosition(){
         return xPosition;
     }
 
-    public static int getyPosition(){
+    public int getyPosition(){
         return yPosition;
     }
 
-    public static int getScore(){
+    public int getScore(){
         return Score;
     }
 
-    public static int getHP(){ return HP; }
+    public int getHP(){ return HP; }
 
 }

@@ -28,13 +28,17 @@ public class PacManActivity extends AppCompatActivity {
     private GridLayout gridLayout;
     private int xPosition,yPosition;
     private int[][] Board;
+
     private TextView scoreText;
     private ImageButton leftButton,rightButton,upButton,downButton;
 
+    private PMBoard pmBoard;
     private ImageView HP1,HP2,HP3;
     private ScheduledFuture<?> f,f1;
 
     private Ghost redGhost,blueGhost,yellowGhost,pinkGhost;
+
+    private PacMan pacman;
 
     private ArrayList<Ghost> Ghosts;
 
@@ -57,14 +61,18 @@ public class PacManActivity extends AppCompatActivity {
         HP2 = findViewById(R.id.HP2);
         HP3 = findViewById(R.id.HP3);
 
-        Board = PMBoard.regenerateBoard();
-        // Spawning Pacman and Ghosts at the center of the map
-        PacMan.spawnPacMan();
+        // create board
+        pmBoard = new PMBoard();
 
-        redGhost = new Ghost(12,11,2);
-        blueGhost = new Ghost(11,13,3);
-        yellowGhost = new Ghost(14,13,4);
-        pinkGhost = new Ghost(13,15,5);
+        Board = pmBoard.getPMBoard();
+        // Spawning Pacman and Ghosts at the center of the map
+        pacman = new PacMan(pmBoard);
+        pacman.spawnPacMan();
+
+        redGhost = new Ghost(12,11,2, pacman, pmBoard);
+        blueGhost = new Ghost(11,13,3, pacman, pmBoard);
+        yellowGhost = new Ghost(14,13,4, pacman, pmBoard);
+        pinkGhost = new Ghost(13,15,5, pacman, pmBoard);
 
         Ghosts = new ArrayList<>();
         Ghosts.add(redGhost);
@@ -142,34 +150,34 @@ public class PacManActivity extends AppCompatActivity {
     // Polls the buttons to check if they're pressed. If so, we
     @SuppressLint("SetTextI18n")
     public void movePacman(){
-        scoreText.setText("Score " + PacMan.getScore());
+        scoreText.setText("Score " + pacman.getScore());
 
         // Retrieve old position of PacMan
-        int oldXPosition = PacMan.getxPosition();
-        int oldYPosition = PacMan.getyPosition();
+        int oldXPosition = pacman.getxPosition();
+        int oldYPosition = pacman.getyPosition();
 
         // Move PacMan based on button held
         if (rightButton.isPressed()){
             ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
             runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-            PacMan.updatePosition(PacMan.getxPosition() + 1 , PacMan.getyPosition());
-            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            pacman.updatePosition(pacman.getxPosition() + 1 , pacman.getyPosition());
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((pacman.getyPosition() *Board[0].length) + pacman.getxPosition());
             runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthright));
 
         }
         if (leftButton.isPressed()){
             ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
             runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-            PacMan.updatePosition(PacMan.getxPosition() - 1, PacMan.getyPosition());
-            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            pacman.updatePosition(pacman.getxPosition() - 1, pacman.getyPosition());
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((pacman.getyPosition() *Board[0].length) + pacman.getxPosition());
             runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthleft));
         }
 
         if (upButton.isPressed()){
             ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
             runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-            PacMan.updatePosition(PacMan.getxPosition() , PacMan.getyPosition() - 1);
-            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() *Board[0].length) + PacMan.getxPosition());
+            pacman.updatePosition(pacman.getxPosition() , pacman.getyPosition() - 1);
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((pacman.getyPosition() *Board[0].length) + pacman.getxPosition());
             runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthup));
 
         }
@@ -177,8 +185,8 @@ public class PacManActivity extends AppCompatActivity {
         if (downButton.isPressed()){
             ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
             runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-            PacMan.updatePosition(PacMan.getxPosition() , PacMan.getyPosition() + 1);
-            ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() * Board[0].length) + PacMan.getxPosition());
+            pacman.updatePosition(pacman.getxPosition() , pacman.getyPosition() + 1);
+            ImageView imageView2 = (ImageView) gridLayout.getChildAt((pacman.getyPosition() * Board[0].length) + pacman.getxPosition());
             runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthdown));
         }
 
@@ -236,11 +244,11 @@ public class PacManActivity extends AppCompatActivity {
 
     public void updateHP(){
         // Everytime we lose 1 HP, a heart is removed
-        if (PacMan.getHP() == 2)
+        if (pacman.getHP() == 2)
             runOnUiThread( () ->HP3.setImageResource(R.drawable.blackbackground));
-        else if(PacMan.getHP() == 1 )
+        else if(pacman.getHP() == 1 )
             runOnUiThread( () ->HP2.setImageResource(R.drawable.blackbackground));
-        else if (PacMan.getHP() == 0){
+        else if (pacman.getHP() == 0){
             runOnUiThread( () ->HP1.setImageResource(R.drawable.blackbackground));
 
             // We stop the game
@@ -252,13 +260,13 @@ public class PacManActivity extends AppCompatActivity {
 
     public void respawnPacMan(){
 
-        int oldXPosition = PacMan.getxPosition();
-        int oldYPosition = PacMan.getyPosition();
+        int oldXPosition = pacman.getxPosition();
+        int oldYPosition = pacman.getyPosition();
 
         ImageView imageView1 = (ImageView) gridLayout.getChildAt((oldYPosition *Board[0].length) + oldXPosition);
         runOnUiThread(() ->imageView1.setImageResource(R.drawable.blackbackground));
-        PacMan.respawnPacMan();
-        ImageView imageView2 = (ImageView) gridLayout.getChildAt((PacMan.getyPosition() * Board[0].length) + PacMan.getxPosition());
+        pacman.respawnPacMan();
+        ImageView imageView2 = (ImageView) gridLayout.getChildAt((pacman.getyPosition() * Board[0].length) + pacman.getxPosition());
         runOnUiThread(() ->imageView2.setImageResource(R.drawable.pmopenmouthright));
     }
 
@@ -266,7 +274,7 @@ public class PacManActivity extends AppCompatActivity {
     public void onBackPressed(){
         f1.cancel(true);
         f.cancel(true);
-        PMBoard.regenerateBoard();
+        pmBoard.regenerateBoard();
         super.onBackPressed();
     }
 

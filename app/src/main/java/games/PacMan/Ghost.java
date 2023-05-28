@@ -9,8 +9,12 @@ public class Ghost {
     private int xInitial,yInitial;
     private final int ghostNumber;
     private int tileToBeReplaced;
-    int[][] PacManGrid = PMBoard.getPMBoard();
-    public Ghost(int startX,int startY, int ghostNum){
+
+    private PacMan pacman;
+    int[][] PacManGrid; // = PMBoard.getPMBoard();
+    public Ghost(int startX,int startY, int ghostNum, PacMan pacMan, PMBoard board){
+        PacManGrid = board.getPMBoard();
+        pacman = pacMan;
         xInitial = startX;
         yInitial = startY;
         xCurrent = xInitial;
@@ -24,8 +28,8 @@ public class Ghost {
 
         PacManGrid[yCurrent][xCurrent] = 0;
         // Retrieving the PacMan Grid and the current position of PacMan
-        int xPacMan = PacMan.getxPosition();
-        int yPacMan = PacMan.getyPosition();
+        int xPacMan = pacman.getxPosition();
+        int yPacMan = pacman.getyPosition();
 
         // Deque containing all the nodes that need to be explored
         ArrayDeque<Node> nodesToBeExplored = new ArrayDeque<>();
@@ -134,7 +138,7 @@ public class Ghost {
 
     public boolean checkPacmanCollision(){
         if (PacManGrid[yNext][xNext] == 6){
-            PacMan.decreaseHP();
+            pacman.decreaseHP();
             return true;
         }
         return false;
