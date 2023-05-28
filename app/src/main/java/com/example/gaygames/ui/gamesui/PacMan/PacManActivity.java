@@ -2,7 +2,6 @@ package com.example.gaygames.ui.gamesui.PacMan;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import games.PacMan.Ghost;
 import games.PacMan.PMBoard;
@@ -126,25 +124,10 @@ public class PacManActivity extends AppCompatActivity {
         int DeltaT=250;
         f1 = executor.scheduleAtFixedRate(this::moveGhosts, 5 * DeltaT, DeltaT, TimeUnit.MILLISECONDS);
 
-        moveGhostsWithDelay();
-    }
-    // Scheduled executors that make use of movePacman() and moveGhosts(). Also makes use
-    // of handler that starts moving ghosts with delay
-    public void moveGhostsWithDelay(){
-        // Adds the other ghosts to Ghosts list every 10 seconds
-            AtomicInteger j = new AtomicInteger();
-            if (j.get() == 0)
-            {
-                new Handler().postDelayed(() ->{
-                    Ghosts.add(blueGhost);
-                    new Handler().postDelayed(() ->{
-                        Ghosts.add(yellowGhost);
-                        new Handler().postDelayed(() ->{
-                            Ghosts.add(pinkGhost);
-                        }, 15000);
-                    }, 15000);
-                }, 15000);
-            }
+        executor.schedule(() -> Ghosts.add(blueGhost), 15, TimeUnit.SECONDS);
+        executor.schedule(() -> Ghosts.add(yellowGhost), 30, TimeUnit.SECONDS);
+        executor.schedule(() -> Ghosts.add(pinkGhost), 45, TimeUnit.SECONDS);
+
     }
 
     // Polls the buttons to check if they're pressed. If so, we
