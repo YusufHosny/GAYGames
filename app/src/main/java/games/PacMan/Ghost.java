@@ -2,23 +2,27 @@ package games.PacMan;
 
 import java.util.ArrayDeque;
 
-import games.PacMan.Node;
-import games.PacMan.PMBoard;
-import games.PacMan.PacMan;
-
 public class Ghost {
-    private int xPosition, yPosition, ghostNumber;
+    private int xCurrent,yCurrent;
+    private int xNext,yNext;
+
+    private int xInitial,yInitial;
+    private final int ghostNumber;
+    private int tileToBeReplaced;
     int[][] PacManGrid = PMBoard.getPMBoard();
     public Ghost(int startX,int startY, int ghostNum){
-        xPosition = startX;
-        yPosition = startY;
+        xInitial = startX;
+        yInitial = startY;
+        xCurrent = xInitial;
+        yCurrent = yInitial;
         ghostNumber = ghostNum;
-        PacManGrid[yPosition][xPosition] = ghostNumber;
+        tileToBeReplaced = 9;
+        PacManGrid[yCurrent][xCurrent] = ghostNumber;
     }
 
-    public void moveByShortestPath(){
+    public void findShortestPath(){
 
-        PacManGrid[yPosition][xPosition] = 0;
+        PacManGrid[yCurrent][xCurrent] = 0;
         // Retrieving the PacMan Grid and the current position of PacMan
         int xPacMan = PacMan.getxPosition();
         int yPacMan = PacMan.getyPosition();
@@ -27,7 +31,7 @@ public class Ghost {
         ArrayDeque<Node> nodesToBeExplored = new ArrayDeque<>();
 
         // Creating starting position node of the ghost and adding it to nodesTobeExploredList
-        Node startingGhostPosition = new Node(xPosition,yPosition);
+        Node startingGhostPosition = new Node(xCurrent, yCurrent);
         nodesToBeExplored.add(startingGhostPosition);
 
 
@@ -51,7 +55,7 @@ public class Ghost {
 
 
         // Just instantiating the variable that can be used in the loop
-        Node currentNode = new Node(xPosition,yPosition);
+        Node currentNode = new Node(xCurrent, yCurrent);
 
         // While loop that updates the three arrays
         while (!(currentNode.getX() == xPacMan && currentNode.getY() == yPacMan) && (nodesToBeExplored.size() != 0)){
@@ -63,31 +67,31 @@ public class Ghost {
             // Inspecting neighbors of current node
 
             for (int i=-1;i<2;i++) {
+                try {
+                    if (!(Visited[currentNode.getY()][currentNode.getX() + i]) && isNotGhostTile(currentNode.getX() + i,currentNode.getY())) {
+                        Node newNodeToBeExplored = new Node(currentNode.getX() + i, currentNode.getY());
+                        nodesToBeExplored.add(newNodeToBeExplored);
 
-                if (!(Visited[currentNode.getY()][currentNode.getX() + i])) {
-                    Node newNodeToBeExplored = new Node(currentNode.getY(), currentNode.getX() + i);
-                    nodesToBeExplored.add(newNodeToBeExplored);
-
-                    Visited[currentNode.getY()][currentNode.getX() + i] = true;
-                    Previous[currentNode.getY()][currentNode.getX() + i] = currentNode;
+                        Visited[currentNode.getY()][currentNode.getX() + i] = true;
+                        Previous[currentNode.getY()][currentNode.getX() + i] = currentNode;
+                    }
                 }
-
+                catch (IndexOutOfBoundsException ignore){}
             }
+
             for (int j=-1;j<2;j++) {
                 try{
-                    if (!(Visited[currentNode.getY() + j][currentNode.getX()])) {
-                        Node newNodeToBeExplored = new Node(currentNode.getY() + j, currentNode.getX());
+                    if (!(Visited[currentNode.getY() + j][currentNode.getX()]) //&& isNotGhostTile(currentNode.getX(),currentNode.getY()+j)
+                     ) {
+                        Node newNodeToBeExplored = new Node(currentNode.getX(), currentNode.getY() + j);
                         nodesToBeExplored.add(newNodeToBeExplored);
 
                         Visited[currentNode.getY() + j][currentNode.getX() ] = true;
                         Previous[currentNode.getY() + j][currentNode.getX() ] = currentNode;
                     }
                 }
-                catch (IndexOutOfBoundsException e){
-
-                }
+                catch (IndexOutOfBoundsException ignored){}
             }
-
         }
 
         // Outside of While loop - Reconstructing Shortest path (with list of sequential nodes)
@@ -96,23 +100,87 @@ public class Ghost {
 
         // We start from the node with PacMan and constantly retrieve the previous node and add it to
         // the shortest path list
-        while (!(currentNode.getX() == xPosition && currentNode.getY() == yPosition)){
-            shortestPath.addFirst(currentNode);
-            currentNode = Previous[currentNode.getY()][currentNode.getX()];
+        while (!(currentNode.getX() == xCurrent && currentNode.getY() == yCurrent)){
+            try{
+                shortestPath.addFirst(currentNode);
+                currentNode = Previous[currentNode.getY()][currentNode.getX()];
+            }
+            catch (NullPointerException ignored){
+
+            }
         }
 
         // We only care about the first best next node from the ghost
-        xPosition = shortestPath.getFirst().getX();
-        yPosition = shortestPath.getFirst().getY();
-        PacManGrid[yPosition][xPosition] = ghostNumber;
-        System.out.println(xPosition + " " + yPosition);
+        xNext = shortestPath.getFirst().getX();
+        yNext = shortestPath.getFirst().getY();
+
+
+    }
+
+    public void moveByShortestPath(){
+        PacManGrid[yCurrent][xCurrent] = tileToBeReplaced;
+        if (PacManGrid[yNext][xNext] == 9)
+            tileToBeReplaced = 9;
+        else
+            tileToBeReplaced = 0;
+        PacManGrid[yNext][xNext] = ghostNumber;
+    }
+
+
+    public void updateCurrentAndNext(){
+        xCurrent = xNext;
+        yCurrent = yNext;
+    }
+
+    public boolean checkPacmanCollision(){
+        if (PacManGrid[yNext][xNext] == 6){
+            PacMan.decreaseHP();
+            return true;
+        }
+        return false;
+    }
+
+    public void respawnGhost(int startX,int startY){
+        xCurrent = startX;
+        yCurrent = startY;
+
+        PacManGrid[yCurrent][xCurrent] = ghostNumber;
+    }
+
+    public boolean isNotGhostTile(int x,int y){
+        return PacManGrid[y][x] < 2 || PacManGrid[y][x] > 5;
     }
 
     public int getX(){
-        return xPosition;
+        return xCurrent;
     }
 
     public int getY(){
-        return yPosition;
+        return yCurrent;
+    }
+
+    public int getxNext(){
+        return xNext;
+    }
+
+    public int getyNext(){
+        return yNext;
+    }
+
+    public int getInitialX(){
+        return xInitial;
+    }
+
+    public int getInitialY(){
+        return yInitial;
+    }
+
+    public void setXYNext(int XNext,int YNext){
+        xNext = XNext;
+        yNext = YNext;
+    }
+
+    public void setTileToBeReplaced(int num){
+        tileToBeReplaced = num;
     }
 }

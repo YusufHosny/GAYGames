@@ -8,8 +8,15 @@ public class PacMan {
     public static void spawnPacMan(){
         HP = 3;
         Score = 0;
-        xPosition = 7;  // Initial spawn point of pacman
-        yPosition = 1;
+        xPosition = 14;  // Initial spawn point of pacman
+        yPosition = 17;
+        Board[yPosition][xPosition] = 6;
+    }
+
+    public static void respawnPacMan(){
+        Board[yPosition][xPosition] = 0;
+        xPosition = 14;  // Initial spawn point of pacman
+        yPosition = 17;
         Board[yPosition][xPosition] = 6;
     }
 
@@ -60,7 +67,8 @@ public class PacMan {
     //////////// METHODS THAT CHECK THE NEXT TILE BASED ON POTENTIAL NEW POSITION //////////
     public static boolean ghostCollision(int newXPosition, int newYPosition){
         // Returns True if we collide against a ghost
-        return Board[newYPosition][newXPosition] == 2;
+        return Board[newYPosition][newXPosition] == 2 || Board[newYPosition][newXPosition]== 3
+                || Board[newYPosition][newXPosition]== 4 || Board[newYPosition][newXPosition]== 5;
     }
 
     public static boolean outOfBounds(int newXPosition, int newYPosition){
@@ -80,6 +88,10 @@ public class PacMan {
         return Board[newYPosition][newXPosition] == 1;
     }
 
+    public static void decreaseHP(){
+        HP--;
+    }
+
     ///////////////////////// GETTERS AND SETTERS ////////////////////////////////////////////////
     public static int getxPosition(){
         return xPosition;
@@ -92,5 +104,7 @@ public class PacMan {
     public static int getScore(){
         return Score;
     }
+
+    public static int getHP(){ return HP; }
 
 }

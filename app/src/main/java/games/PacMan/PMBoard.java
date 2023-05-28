@@ -49,5 +49,10 @@ public class PMBoard {
         return PMBoard;
     }
 
+    public static int[][] regenerateBoard(){
+        PMBoard = null;
+        return getPMBoard();
+    }
+
 
 }
