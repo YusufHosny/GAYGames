@@ -68,6 +68,7 @@ public class UserData {
 
     // parse the friendslist into friend ids
     public static void parseFriendString(String friendString) {
+        friendsList = new ArrayList<>();
         // if friendstring is empty, do nothing
         if(friendString.equals(" ")) return;
 
