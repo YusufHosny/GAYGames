@@ -1,11 +1,10 @@
 package com.example.gaygames.ui.gamesui.Snake;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,11 +26,9 @@ import games.Snake.Tile;
 import games.Snake.SwipeListener;
 
 public class SnakeActivity extends AppCompatActivity {
-    private RelativeLayout relative_layout;
-    private SwipeListener SwipeListener;
     private LinkedList<Tile> Snake;
     private Direction nextDirection;
-    private TextView ShowSwipe;
+
     private SnakeGrid Grid;
     private GridLayout gridLayout;
     private ScheduledFuture<?> f;
@@ -44,11 +41,11 @@ public class SnakeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_snake);
-        relative_layout = findViewById(R.id.constraint_lyato);
+        RelativeLayout relative_layout = findViewById(R.id.constraint_lyato);
         gridLayout = findViewById(R.id.griddy_layout);
         tv = findViewById(R.id.textView2);
 
-        SwipeListener = new SwipeListener(relative_layout,this);
+        games.Snake.SwipeListener swipeListener = new SwipeListener(relative_layout, this);
         // Initialize grid
         Grid = new SnakeGrid(20,20);
         Score=0;
@@ -158,5 +155,11 @@ public class SnakeActivity extends AppCompatActivity {
 
     public void setDirection(Direction direction) {
         nextDirection = direction;
+    }
+
+    @Override
+    public void onBackPressed(){
+        f.cancel(true);
+        super.onBackPressed();
     }
 }
