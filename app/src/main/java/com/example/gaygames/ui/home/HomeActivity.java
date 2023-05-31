@@ -13,7 +13,6 @@ import games.RockPaperScissors.RPSGame;
 import games.Snake.SnakeGame;
 import games.TicTacToe.TicTacToeGame;
 import games.general.GameButton;
-import games.placeholder.PlaceholderGame;
 import games.runner.RunnerGame;
 
 public class HomeActivity extends AppCompatActivity {
@@ -25,8 +24,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // Create a GameButton for each game
-        new GameButton((ImageButton) findViewById(R.id.placeholderBtn), new PlaceholderGame());
-
         new GameButton((ImageButton) findViewById(R.id.TTTBtn), new TicTacToeGame());
 
         new GameButton((ImageButton) findViewById(R.id.runnerBtn), new RunnerGame());
@@ -35,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
 
         new GameButton((ImageButton) findViewById(R.id.snakeBtn), new SnakeGame());
       
-        new GameButton((Button) findViewById(R.id.button6), new PacManGame());
+        new GameButton((ImageButton) findViewById(R.id.pacmanBtn), new PacManGame());
 
         findViewById(R.id.friendsBtn).setOnClickListener(view -> {
             Intent intent = new Intent(this, FriendsActivity.class);
