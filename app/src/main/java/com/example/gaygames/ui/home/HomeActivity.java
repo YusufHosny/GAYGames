@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gaygames.R;
 
+import games.PacMan.PacManGame;
 import games.RockPaperScissors.RPSGame;
 import games.Snake.SnakeGame;
 import games.TicTacToe.TicTacToeGame;
@@ -33,13 +34,12 @@ public class HomeActivity extends AppCompatActivity {
         new GameButton((ImageButton) findViewById(R.id.RPSBtn), new RPSGame());
 
         new GameButton((ImageButton) findViewById(R.id.snakeBtn), new SnakeGame());
+      
+        new GameButton((Button) findViewById(R.id.button6), new PacManGame());
 
         findViewById(R.id.friendsBtn).setOnClickListener(view -> {
             Intent intent = new Intent(this, FriendsActivity.class);
             startActivity(intent);
         });
-
     }
-
-
 }

@@ -1,8 +1,16 @@
 package com.example.gaygames.ui.gamesui.Snake;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,8 +45,10 @@ import games.general.UserData;
 
 public class SnakeActivity extends AppCompatActivity {
     private LinkedList<Tile> Snake;
+
     private Direction nextDirection,nextOppositeDirection,currentDirection,currentOppositeDirection;
     private TextView ShowSwipe;
+
     private SnakeGrid Grid;
     private GridLayout gridLayout;
     private ScheduledFuture<?> f;
@@ -100,6 +110,7 @@ public class SnakeActivity extends AppCompatActivity {
         nextOppositeDirection=Direction.Down;
 
         int deltaT=100;
+
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
         }
@@ -217,5 +228,11 @@ public class SnakeActivity extends AppCompatActivity {
         );
 
         requestQueue.add(getHighscore);
+    }
+
+    @Override
+    public void onBackPressed(){
+        f.cancel(true);
+        super.onBackPressed();
     }
 }
