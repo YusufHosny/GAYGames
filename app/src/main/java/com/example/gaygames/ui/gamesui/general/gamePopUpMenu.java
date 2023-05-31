@@ -24,7 +24,7 @@ public class gamePopUpMenu extends Fragment {
         // Required empty public constructor
     }
 
-
+    // Makes leaderboardActivity field equal to leaderboard
     public static void setLeaderboardActivity(Class<? extends AppCompatActivity> leaderboard) {
         leaderboardActivity = leaderboard;
     }
@@ -33,26 +33,27 @@ public class gamePopUpMenu extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment = makes it visible
         View view = inflater.inflate(R.layout.fragment_game_pop_up_menu, container, false);
 
+        // Play again button
         ImageButton playAgain = view.findViewById(R.id.playAgainButton);
         playAgain.setOnClickListener(v -> {
-            Objects.requireNonNull(getActivity()).recreate();
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();});
+            Objects.requireNonNull(getActivity()).recreate(); // Restarts the activity
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();}); // Removes the pop up
 
+        // Main Menu button
         ImageButton mainMenu = view.findViewById(R.id.mainMenuButton);
         mainMenu.setOnClickListener(v -> {
-            Objects.requireNonNull(getActivity()).finish();
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();});
+            Objects.requireNonNull(getActivity()).finish(); // Finishes the activity
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();}); // Removes pop up
 
-        ImageButton leaderb = view.findViewById(R.id.leaderboardButton);
-        leaderb.setOnClickListener(v -> {
+        ImageButton LBbutton = view.findViewById(R.id.leaderboardButton);
+        LBbutton.setOnClickListener(v -> {
             // show leaderboard
                 Intent intent = new Intent(getContext(), leaderboardActivity);
-                startActivity(intent);
+                startActivity(intent); // Go to leaderboard activity
         });
-
 
         return view;
     }

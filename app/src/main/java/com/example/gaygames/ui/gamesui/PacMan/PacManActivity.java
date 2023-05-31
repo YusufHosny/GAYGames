@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gaygames.R;
+import com.example.gaygames.ui.gamesui.general.gamePopUpMenu;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -24,13 +25,12 @@ import games.PacMan.PacMan;
 public class PacManActivity extends AppCompatActivity {
 
     private GridLayout gridLayout;
-    private int xPosition,yPosition;
+
     private int[][] Board;
 
     private TextView scoreText;
     private ImageButton leftButton,rightButton,upButton,downButton;
 
-    private PMBoard pmBoard;
     private ImageView HP1,HP2,HP3;
     private ScheduledFuture<?> f,f1;
 
@@ -59,10 +59,10 @@ public class PacManActivity extends AppCompatActivity {
         HP2 = findViewById(R.id.HP2);
         HP3 = findViewById(R.id.HP3);
 
-        // create board
-        pmBoard = new PMBoard();
-
+        // Create board
+        PMBoard pmBoard = new PMBoard();
         Board = pmBoard.getPMBoard();
+
         // Spawning Pacman and Ghosts at the center of the map
         pacman = new PacMan(pmBoard);
         pacman.spawnPacMan();
@@ -237,7 +237,9 @@ public class PacManActivity extends AppCompatActivity {
             // We stop the game
             f.cancel(true);
             f1.cancel(true);
-            // YUSUF POP UP MENUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
+
+            // Creates PopUp Menu
+            getSupportFragmentManager().beginTransaction().replace(R.id.PacManConstraintLayout, new gamePopUpMenu()).commit();
         }
     }
 
@@ -255,9 +257,11 @@ public class PacManActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+        // Stops executors and regenerate board
         f1.cancel(true);
         f.cancel(true);
-        pmBoard.regenerateBoard();
+
+        // Go back to previous activity
         super.onBackPressed();
     }
 

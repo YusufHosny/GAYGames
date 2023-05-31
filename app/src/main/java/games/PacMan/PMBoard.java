@@ -1,7 +1,7 @@
 package games.PacMan;
 
 public class PMBoard {
-    private int[][] PMBoard;
+    private final int[][] PMBoard;
 
     public PMBoard() {
         // 0 = coin, 1 = wall, 6 = PacMan, 9 = empty tile
@@ -42,16 +42,6 @@ public class PMBoard {
     }
 
     public int[][] getPMBoard(){
-        if (PMBoard == null){
-            PMBoard brd= new PMBoard();
-        }
         return PMBoard;
     }
-
-    public int[][] regenerateBoard(){
-        PMBoard = null;
-        return getPMBoard();
-    }
-
-
 }

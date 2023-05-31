@@ -30,19 +30,6 @@ public class Leaderboard {
     }
 
 
-    // add a score to the local and online leaderboard
-    public void addScore(Context c, String playerName, int score) {
-        RequestQueue requestQueue = Volley.newRequestQueue(c);
-        StringRequest submitRequest = new StringRequest(Request.Method.GET,
-                addScoreURL + playerName + "/" + score,
-                response -> leaderboard.put(playerName, score),
-                error -> Log.e( "LeaderboardDB", error.getLocalizedMessage(), error )
-        );
-        requestQueue.add(submitRequest);
-
-    }
-
-
     // update the leaderboard to the latest data
     public void update(AppCompatActivity c) {
         RequestQueue requestQueue = Volley.newRequestQueue(c);

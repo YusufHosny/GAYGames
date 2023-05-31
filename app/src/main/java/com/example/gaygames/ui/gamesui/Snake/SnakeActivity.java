@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.util.Log;
 
 import android.widget.GridLayout;
@@ -16,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,12 +44,11 @@ public class SnakeActivity extends AppCompatActivity {
     private LinkedList<Tile> Snake;
 
     private Direction nextDirection,nextOppositeDirection,currentDirection,currentOppositeDirection;
-    private TextView ShowSwipe;
 
     private SnakeGrid Grid;
     private GridLayout gridLayout;
     private ScheduledFuture<?> f;
-    private TextView scoreTV, highScoreTV;
+    private TextView scoreTV;
 
     int Score, HighScore;
 
@@ -64,16 +60,14 @@ public class SnakeActivity extends AppCompatActivity {
         RelativeLayout relative_layout = findViewById(R.id.constraint_lyato);
         gridLayout = findViewById(R.id.griddy_layout);
         scoreTV = findViewById(R.id.scoreTV);
-        highScoreTV = findViewById(R.id.highestScoreTV);
 
+        new SwipeListener(relative_layout, this);
 
-        games.Snake.SwipeListener swipeListener = new SwipeListener(relative_layout, this);
         // Initialize grid
         Grid = new SnakeGrid(20,20);
         Score=0;
         HighScore = Score;
         scoreTV.setText("Score: "+Score);
-        highScoreTV.setText("High score: "+HighScore);
 
         gamePopUpMenu.setLeaderboardActivity(SnakeLeaderboardActivity.class);
 
@@ -115,6 +109,7 @@ public class SnakeActivity extends AppCompatActivity {
             f = executor.scheduleAtFixedRate(this::updateBoard, 5 * deltaT, deltaT, TimeUnit.MILLISECONDS);
         }
 
+    @SuppressLint("SetTextI18n")
     public void updateBoard(){
         int newRow = checkIncomingTile().getRow();
         int newCol = checkIncomingTile().getCol();
@@ -197,7 +192,7 @@ public class SnakeActivity extends AppCompatActivity {
 
 
     public void gameDone() {
-        // check if highscore and if it is update leaderboard
+        // check if high score and if it is update leaderboard
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         StringRequest sendHighscore = new StringRequest( Request.Method.GET,

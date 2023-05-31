@@ -5,12 +5,10 @@ import java.util.ArrayDeque;
 public class Ghost {
     private int xCurrent,yCurrent;
     private int xNext,yNext;
-
-    private int xInitial,yInitial;
+    private final int xInitial, yInitial;
     private final int ghostNumber;
     private int tileToBeReplaced;
-
-    private PacMan pacman;
+    private final PacMan pacman;
     int[][] PacManGrid; // = PMBoard.getPMBoard();
     public Ghost(int startX,int startY, int ghostNum, PacMan pacMan, PMBoard board){
         PacManGrid = board.getPMBoard();

@@ -38,17 +38,21 @@ public class LoginMenuActivity extends AppCompatActivity {
 
         nameTxt = findViewById(R.id.UsernameText);
         pwdTxt = findViewById(R.id.PsdText);
-        requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue = Volley.newRequestQueue(this); // Creates request Queue object in which all HTTP requests queue up
     }
 
+    // Hashes password before sending it to database
     private int hashPassword(String password) {
         return password.hashCode();
     }
 
 
     public void httpGet(String requestURL, Response.Listener<String> r, Response.ErrorListener e) {
+        // Creates new HTTP get request with server URL
         StringRequest submitRequest = new StringRequest(Request.Method.GET, requestURL, r, e);
         requestQueue.add(submitRequest);
+
     }
 
     public void login(View Caller){
@@ -58,8 +62,8 @@ public class LoginMenuActivity extends AppCompatActivity {
                         + "/" + username,
                 response -> {
                     try {
-                        JSONArray responseArray = new JSONArray(response);
-                        JSONObject curObject = responseArray.getJSONObject( 0 );
+                        JSONArray responseArray = new JSONArray(response); // Parsing response String into JSON Array
+                        JSONObject curObject = responseArray.getJSONObject( 0 ); // Retrieving first object of JSON Array
                         if(curObject.getInt("correct") == 1) {
                             UserData.initialize(curObject.getInt("AccountID"), this);
                             UserData.setUsername(username);
@@ -71,6 +75,7 @@ public class LoginMenuActivity extends AppCompatActivity {
                     }
                     catch( JSONException e )
                     {
+                        // If there is no
                         Toast.makeText(getApplicationContext(), "Username does not exist", Toast.LENGTH_SHORT).show();
                         Log.e( "LoginDB", e.getMessage(), e );
                     }
