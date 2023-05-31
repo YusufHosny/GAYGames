@@ -42,7 +42,10 @@
 
     <string name="parallaxbg"> parallax background component</string>
 
+
+    <!-- Leaderboard -->
     <string name="leaderboardTop"> Leaderboard </string>
+    <string name="leaderboardSwitch" > Friends </string>
 
     <!-- RockPaperScissors-->
     <string name="rockButton1"> rockButton </string>
@@ -55,7 +58,7 @@
     <string name="textView2"> Player 2 </string>
     <string name="loginImageLabel">loginImage</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Popup -->
     <string name="hello_blank_fragment"> GAME OVER </string>
     <string name="popUpPlayAgain"> Play Again </string>
     <string name="popUpMainMenu"> Main Menu </string>

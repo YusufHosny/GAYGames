@@ -30,9 +30,12 @@ public class UserData {
     // friends id list
     private static ArrayList<Integer> friendsList;
 
+    // friends name list
+    private static ArrayList<String> friendsListNames;
+
     // method to get friends list
-    public static ArrayList<Integer> getFriendsList(){
-        return friendsList;
+    public static ArrayList<String> getFriendsList(){
+        return friendsListNames;
     }
 
 
@@ -43,6 +46,7 @@ public class UserData {
         TicTacToeMPData.genCodeList();
 
         friendsList = new ArrayList<>();
+        friendsListNames = new ArrayList<>();
         leaderboardHashMap = new HashMap<>();
     }
 
@@ -58,6 +62,9 @@ public class UserData {
                         String friendString = object.getString("friendList");
                         // get the friends list then parse it here
                         parseFriendString(friendString);
+
+                        // update friend names afterwards
+                        updateFriendNames(a);
                     } catch( JSONException e ) {
                         Log.e( "LeaderboardDB", e.getMessage(), e );
                     }
@@ -92,6 +99,36 @@ public class UserData {
         int friend = Integer.parseInt(collectorString.toString());
         friendsList.add(friend);
     }
+
+
+    public static void updateFriendNames(AppCompatActivity context) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        // clear list
+        friendsListNames = new ArrayList<>();
+
+        // get each friend's name
+        for(int friend : friendsList) {
+            StringRequest getFriendNameReq = new StringRequest(
+                    "https://studev.groept.be/api/a22pt107/getNameFromId/" + friend,
+                    response -> {
+                        try {
+                            JSONArray responseArray = new JSONArray(response);
+                            JSONObject responseObject = responseArray.getJSONObject(0);
+
+                            String friendName = responseObject.getString("username");
+                            friendsListNames.add(friendName);
+
+                        } catch (JSONException e) {
+                            Log.e("updateFLN", e.getMessage(), e);
+                        }
+                    },
+                    error -> Log.e("updateFLN", error.getLocalizedMessage(), error)
+            );
+
+            requestQueue.add(getFriendNameReq);
+        }
+    }
+
 
     public static void addLeaderboard(Class<? extends AppCompatActivity> a) {
         leaderboardHashMap.put(a, new Leaderboard());

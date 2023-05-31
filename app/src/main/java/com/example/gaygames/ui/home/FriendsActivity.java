@@ -26,7 +26,7 @@ import games.general.UserData;
 
 public class FriendsActivity extends AppCompatActivity {
 
-    private ArrayList<Integer> friendsList;
+    private ArrayList<String> friendsList;
 
     private RequestQueue requestQueue;
 
@@ -59,14 +59,14 @@ public class FriendsActivity extends AppCompatActivity {
         ((LinearLayout) findViewById(R.id.friendsPane)).removeAllViews();
 
         // for each friend
-        for(int friend: friendsList) {
+        for(String friend: friendsList) {
             // create friend entry visuals
             // entry container (horizontal layout)
             LinearLayout friendContainer = new LinearLayout(this);
             friendContainer.setOrientation(LinearLayout.HORIZONTAL);
             // get friend name
             TextView friendName = new TextView(this);
-            getFriendName(friend, friendName);
+            friendName.setText(friend);
 
             // friend status
             ImageView friendStatus = new ImageView(this);
@@ -80,6 +80,7 @@ public class FriendsActivity extends AppCompatActivity {
         }
     }
 
+    // DEPRECATED
     public void getFriendName(int friend, TextView targetTextView) {
 
         StringRequest getFriendNameReq = new StringRequest(

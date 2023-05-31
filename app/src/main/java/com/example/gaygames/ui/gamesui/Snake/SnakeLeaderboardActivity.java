@@ -2,17 +2,21 @@ package com.example.gaygames.ui.gamesui.Snake;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gaygames.R;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import games.general.UserData;
 
@@ -20,6 +24,8 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
     private Class<? extends AppCompatActivity> gameClass;
 
     private LinkedHashMap<String, Integer> leaderboard;
+
+    private Set<Map.Entry<String, Integer>> selectedLeaderboard;
     private float textSize;
     private int alignment;
 
@@ -44,8 +50,8 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
         ScheduledExecutorService s = Executors.newScheduledThreadPool(1);
         s.scheduleAtFixedRate(this::displayLeaderboard, 20, 2000, TimeUnit.MILLISECONDS);
 
-
-
+        // default leaderboard
+        selectedLeaderboard = leaderboard.entrySet();
     }
 
     @Override
@@ -57,6 +63,20 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
     private void renewLeaderboard() {
         UserData.updateLeaderboard(this, gameClass);
         leaderboard = UserData.getLeaderboard(gameClass).getSortedLeaderboard();
+
+        ArrayList<String> friendsList = UserData.getFriendsList();
+
+        Set<Map.Entry<String, Integer>> friendsLeaderboard = leaderboard.entrySet().stream()
+                .filter(e -> friendsList.contains(e.getKey()))
+                .collect(Collectors.toSet());
+
+        // check if friends or normal leaderboard
+        Switch friendLeaderboardSwitch = findViewById(R.id.FriendsToggle);
+        if(friendLeaderboardSwitch.isChecked()) {
+            selectedLeaderboard = friendsLeaderboard;
+        } else {
+            selectedLeaderboard = leaderboard.entrySet();
+        }
     }
 
     private void displayLeaderboard() {
@@ -67,7 +87,7 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
 
             leaderboardContainer.removeAllViews();
 
-            for(Map.Entry<String, Integer> entry : leaderboard.entrySet()) {
+            for(Map.Entry<String, Integer> entry : selectedLeaderboard) {
                 TextView t = new TextView(this);
                 t.setTextSize(textSize);
                 t.setTextAlignment(alignment);
