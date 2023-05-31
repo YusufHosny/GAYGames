@@ -35,6 +35,8 @@ public class UserData {
     // friends name list
     private static ArrayList<String> friendsListNames;
 
+    private static HashMap<String, Integer> onlineStatuses;
+
     // method to get friends list
     public static ArrayList<String> getFriendsList(){
         return friendsListNames;
@@ -50,6 +52,7 @@ public class UserData {
         friendsList = new ArrayList<>();
         friendsListNames = new ArrayList<>();
         leaderboardHashMap = new HashMap<>();
+        onlineStatuses = new HashMap<>();
     }
 
     // update the friendslist
@@ -119,6 +122,10 @@ public class UserData {
                             String friendName = responseObject.getString("username");
                             friendsListNames.add(friendName);
 
+                            // get online status and store it
+                            int isOnline = responseObject.getInt("isOnline");
+                            onlineStatuses.put(friendName, isOnline);
+
                         } catch (JSONException e) {
                             Log.e("updateFLN", e.getMessage(), e);
                         }
@@ -130,6 +137,12 @@ public class UserData {
         }
     }
 
+
+    public static boolean isOnline(String user) {
+        if(onlineStatuses.get(user) == null) return false;
+
+        return onlineStatuses.get(user) == 1;
+    }
 
     public static void addLeaderboard(Class<? extends AppCompatActivity> a) {
         leaderboardHashMap.put(a, new Leaderboard());

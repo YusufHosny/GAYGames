@@ -1,5 +1,6 @@
 package com.example.gaygames.ui.home;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
@@ -66,8 +67,14 @@ public class FriendsActivity extends AppCompatActivity {
 
             // friend status
             ImageView friendStatus = new ImageView(this);
-            friendStatus.setImageDrawable(AppCompatResources
-                    .getDrawable(this, android.R.drawable.radiobutton_off_background));
+            Drawable onlineicon;
+
+            if(UserData.isOnline(friend)) onlineicon = AppCompatResources
+                        .getDrawable(this, android.R.drawable.radiobutton_on_background);
+            else onlineicon = AppCompatResources
+                    .getDrawable(this, android.R.drawable.radiobutton_off_background);
+
+            friendStatus.setImageDrawable(onlineicon);
 
             // add all to layout then add to main layout
             friendContainer.addView(friendName);
