@@ -27,6 +27,8 @@ public class UserData {
     // account ID for the database for the current log in session
     public static int accountID;
 
+    private static String username;
+
     // friends id list
     private static ArrayList<Integer> friendsList;
 
@@ -153,4 +155,11 @@ public class UserData {
         getLeaderboard(a).setAddScoreURL(url);
     }
 
+    public static String getUsername() {
+        return username;
+    }
+
+    public static void setUsername(String username) {
+        UserData.username = username;
+    }
 }

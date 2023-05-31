@@ -1,6 +1,5 @@
 package com.example.gaygames.ui.gamesui.runner;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gaygames.R;
+import com.example.gaygames.ui.gamesui.general.gamePopUpMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -173,11 +173,10 @@ public class RunnerActivity extends AppCompatActivity implements Animatable {
 
             requestQueue.add(getHighscore);
 
-            // show leaderboard
-            runOnUiThread( () -> {
-            Intent intent = new Intent(this, RunnerLeaderboardActivity.class);
-            startActivity(intent);
-        });
+            // open end game pop up
+            gamePopUpMenu.setLeaderboardActivity(RunnerLeaderboardActivity.class);
+            getSupportFragmentManager().beginTransaction().replace(R.id.RunnerBg, new gamePopUpMenu()).commit();
+
         }
     }
 

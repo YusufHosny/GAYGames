@@ -65,8 +65,7 @@ public class SnakeActivity extends AppCompatActivity {
         scoreTV.setText("Score: "+Score);
         highScoreTV.setText("High score: "+HighScore);
 
-        gamePopUpMenu gamePopUpMenu = com.example.gaygames.ui.gamesui
-                .general.gamePopUpMenu.newInstance("Z","A", SnakeLeaderboardActivity.class);
+        gamePopUpMenu.setLeaderboardActivity(SnakeLeaderboardActivity.class);
 
         // Initialize snake
         Snake = new LinkedList<>();

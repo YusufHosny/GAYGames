@@ -16,10 +16,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gaygames.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import games.general.UserData;
@@ -80,28 +76,6 @@ public class FriendsActivity extends AppCompatActivity {
         }
     }
 
-    // DEPRECATED
-    public void getFriendName(int friend, TextView targetTextView) {
-
-        StringRequest getFriendNameReq = new StringRequest(
-                "https://studev.groept.be/api/a22pt107/getNameFromId/" + friend,
-                response -> {
-                    try {
-                        JSONArray responseArray = new JSONArray(response);
-                        JSONObject responseObject = responseArray.getJSONObject(0);
-
-                        String friendName = responseObject.getString("username");
-                        targetTextView.setText(friendName);
-
-                    } catch (JSONException e) {
-                        Log.e( "getFriendName", e.getMessage(), e );
-                    }
-                },
-                error -> Log.e( "getFriendName", error.getLocalizedMessage(), error )
-        );
-
-        requestQueue.add(getFriendNameReq);
-    }
 
     public void addFriend(String friendName) {
         // add a friend then update the friendslist

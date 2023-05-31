@@ -66,7 +66,8 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
         ArrayList<String> friendsList = UserData.getFriendsList();
 
         Set<Map.Entry<String, Integer>> friendsLeaderboard = leaderboard.entrySet().stream()
-                .filter(e -> friendsList.contains(e.getKey()))
+                .filter(e ->
+                        friendsList.contains(e.getKey()) || e.getKey().equals(UserData.getUsername()))
                 .collect(Collectors.toSet());
 
         // check if friends or normal leaderboard
