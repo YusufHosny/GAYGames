@@ -62,6 +62,7 @@ public class LoginMenuActivity extends AppCompatActivity {
                         JSONObject curObject = responseArray.getJSONObject( 0 );
                         if(curObject.getInt("correct") == 1) {
                             UserData.initialize(curObject.getInt("AccountID"), this);
+                            UserData.setUsername(username);
                             goHome();
                         }  else {
                             Toast.makeText(getApplicationContext(), "Wrong Password", Toast.LENGTH_SHORT).show();

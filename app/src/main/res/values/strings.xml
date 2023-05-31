@@ -4,10 +4,14 @@
     <!-- Home Activity -->
     <string name="title_activity_home">Home</string>
 
-    <string name="placeholder_game1">Gay</string>
-    <string name="placeholder_game2">Gay 2</string>
-    <string name="placeholder_game3">Gay 3</string>
-    <string name="placeholder_game4">Gay 4</string>
+    <string name="game1">Placeholder</string>
+    <string name="game2">TicTacToe</string>
+    <string name="game3">Runner</string>
+    <string name="game4">Rock Paper Scissors</string>
+    <string name="game5">Snake</string>
+
+    <!-- Home Activity -->
+    <string name="friendsTitle">Friends</string>
 
     <!-- Login Activity -->
     <string name="LoginButton">Login</string>
@@ -19,7 +23,7 @@
     <!-- TicTacToe -->
     <string name="tictactoeBlank"> </string>
     <string name="tictactoeToptxt"> Tic Tac Toe </string>
-    <string name="tictactoeBtmTxt"> BOTTOM TEXT </string>
+    <string name="tictactoeBtmTxt"> SinglePlayer </string>
 
     <string name="btmTxtWon">GAME DONE! %1$s won.</string>
 
@@ -36,6 +40,13 @@
     <string name="runnerIconDescription"> Runner Icon </string>
     <string name="initialScore">0</string>
 
+    <string name="parallaxbg"> parallax background component</string>
+
+
+    <!-- Leaderboard -->
+    <string name="leaderboardTop"> Leaderboard </string>
+    <string name="leaderboardSwitch" > Friends </string>
+
     <!-- RockPaperScissors-->
     <string name="rockButton1"> rockButton </string>
     <string name="paperButton1"> paperButton </string>
@@ -46,6 +57,12 @@
     <string name="textView1"> Player 1, your turn  </string>
     <string name="textView2"> Player 2 </string>
     <string name="loginImageLabel">loginImage</string>
+
+    <!-- Popup -->
+    <string name="hello_blank_fragment"> GAME OVER </string>
+    <string name="popUpPlayAgain"> Play Again </string>
+    <string name="popUpMainMenu"> Main Menu </string>
+    <string name="popUpLeaderboard"> Leaderboard </string>
 
 
 </resources>

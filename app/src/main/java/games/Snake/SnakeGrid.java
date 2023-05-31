@@ -16,7 +16,6 @@ public class SnakeGrid {
         }
         initialXPosition=placeSnake();
         generateFruitTile();
-
     }
 
     public Tile[][] getSnakeGrid() {
@@ -28,9 +27,12 @@ public class SnakeGrid {
         int x= R.nextInt(snakeGrid.length);
         int y= R.nextInt(snakeGrid[0].length);
 
-        if (snakeGrid[x][y] instanceof EmptyTile && !(snakeGrid[x][y] instanceof SnakeTile)){
+        if (snakeGrid[x][y] instanceof EmptyTile){
             snakeGrid[x][y]=new FruitTile(x,y);
                 }
+        else {
+            generateFruitTile();
+        }
 
     }
     public int placeSnake(){

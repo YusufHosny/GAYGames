@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient"
     tools:context=".ui.gamesui.tictactoe.TicTacToe1PActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"
         android:layout_marginBottom="100dp"
+        android:foreground="@drawable/tttbg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,6 +151,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/tictactoeToptxt"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         app:layout_constraintBottom_toTopOf="@+id/TTLBContainer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,11 +160,13 @@
 
     <TextView
         android:id="@+id/TTTbtmTxt"
-        android:layout_width="145dp"
+        android:layout_width="wrap_content"
         android:layout_height="49dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/tictactoeBtmTxt"
+        android:textAlignment="center"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

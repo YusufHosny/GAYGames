@@ -56,15 +56,15 @@ public class TicTacToeMPActivity extends AppCompatActivity {
         board = new ArrayList<>();
 
         // define board and tiles using the buttons in the button container
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb1)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb2)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb3)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb4)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb5)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb6)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb7)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb8)));
-        board.add(new TicTacToeTile((Button) findViewById(R.id.TTTb9)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb1)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb2)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb3)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb4)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb5)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb6)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb7)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb8)));
+        board.add(new TicTacToeTile(findViewById(R.id.TTTb9)));
 
         // set correct onclicklistener
         for(TicTacToeTile t: board) {
@@ -80,10 +80,20 @@ public class TicTacToeMPActivity extends AppCompatActivity {
         // set the code text
         ((TextView) findViewById(R.id.TTTtopTxt)).setText(TicTacToeMPData.getCode(matchId));
 
+        // set bottom text
+        ((TextView) findViewById(R.id.TTTbtmTxt)).setText("Multiplayer");
+
         // schedule the updates
         ScheduledExecutorService s = Executors.newScheduledThreadPool(1);
         f = s.scheduleAtFixedRate(this::tttUpdate, 2, 2, TimeUnit.SECONDS);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        endGame();
+        f.cancel(true);
     }
 
 

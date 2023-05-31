@@ -8,7 +8,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/gaylogo_round"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.GAYGames"
@@ -17,7 +17,13 @@
             android:name=".ui.gamesui.PacMan.PacManActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.home.FriendsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.gamesui.runner.RunnerLeaderboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.gamesui.Snake.SnakeLeaderboardActivity"
             android:exported="false" />
         <activity
             android:name=".ui.gamesui.tictactoe.TicTacToeMenuActivity"

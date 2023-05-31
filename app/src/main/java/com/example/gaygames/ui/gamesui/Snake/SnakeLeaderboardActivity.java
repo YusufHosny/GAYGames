@@ -1,4 +1,4 @@
-package com.example.gaygames.ui.gamesui.runner;
+package com.example.gaygames.ui.gamesui.Snake;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -21,14 +21,12 @@ import java.util.stream.Collectors;
 
 import games.general.UserData;
 
-public class RunnerLeaderboardActivity extends AppCompatActivity {
-
+public class SnakeLeaderboardActivity extends AppCompatActivity {
     private Class<? extends AppCompatActivity> gameClass;
 
     private LinkedHashMap<String, Integer> leaderboard;
 
     private Set<Map.Entry<String, Integer>> selectedLeaderboard;
-
     private float textSize;
     private int alignment;
 
@@ -37,16 +35,14 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);
-        // class of the game this leaderboard is for
-        gameClass = RunnerActivity.class;
 
-        // leaderboard set up
-        UserData.setAddURL(gameClass, "https://studev.groept.be/api/a22pt107/addScoreRunner/");
-        UserData.setUpdateURL(gameClass, "https://studev.groept.be/api/a22pt107/getLeaderboardRunner");
+        gameClass = SnakeActivity.class;
+
+        UserData.setAddURL(gameClass, "https://studev.groept.be/api/a22pt107/addScoreSnake/");
+        UserData.setUpdateURL(gameClass, "https://studev.groept.be/api/a22pt107/getLeaderboardSnake");
 
         renewLeaderboard();
 
-        // get the style to base the text on
         TextView styleBase = findViewById(R.id.styleP);
 
         textSize = styleBase.getTextSize();
@@ -59,6 +55,11 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
         selectedLeaderboard = leaderboard.entrySet();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
 
     private void renewLeaderboard() {
         UserData.updateLeaderboard(this, gameClass);
@@ -79,14 +80,6 @@ public class RunnerLeaderboardActivity extends AppCompatActivity {
             selectedLeaderboard = leaderboard.entrySet();
         }
     }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-    }
-
 
     private void displayLeaderboard() {
         renewLeaderboard();
