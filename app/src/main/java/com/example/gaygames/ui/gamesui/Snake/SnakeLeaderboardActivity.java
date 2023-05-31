@@ -11,6 +11,7 @@ import com.example.gaygames.R;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -66,9 +67,10 @@ public class SnakeLeaderboardActivity extends AppCompatActivity {
 
         ArrayList<String> friendsList = UserData.getFriendsList();
 
-        Set<Map.Entry<String, Integer>> friendsLeaderboard = leaderboard.entrySet().stream()
-                .filter(e -> friendsList.contains(e.getKey()))
-                .collect(Collectors.toSet());
+        LinkedHashSet<Map.Entry<String, Integer>> friendsLeaderboard = leaderboard.entrySet().stream()
+                .filter(e ->
+                        friendsList.contains(e.getKey()) || e.getKey().equals(UserData.getUsername()))
+                .collect(Collectors.toCollection(LinkedHashSet::new));
 
         // check if friends or normal leaderboard
         Switch friendLeaderboardSwitch = findViewById(R.id.FriendsToggle);
